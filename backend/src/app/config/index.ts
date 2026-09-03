@@ -16,18 +16,18 @@ export default {
 
   stripe_secret_key: process.env.STRIPE_SECRET_KEY,
 
-  profileCardSecret: process.env.PROFILE_CARD_SECRET,
+  // profileCardSecret: process.env.PROFILE_CARD_SECRET,
 
-  google_client_id: process.env.GOOGLE_CLIENT_ID,
-  google_client_secret: process.env.GOOGLE_CLIENT_SECRET,
+  // google_client_id: process.env.GOOGLE_CLIENT_ID,
+  // google_client_secret: process.env.GOOGLE_CLIENT_SECRET,
 
-  cloudinary_cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-  cloudinary_api_key: process.env.CLOUDINARY_API_KEY,
-  cloudinary_api_secret: process.env.CLOUDINARY_API_SECRET,
+  // cloudinary_cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  // cloudinary_api_key: process.env.CLOUDINARY_API_KEY,
+  // cloudinary_api_secret: process.env.CLOUDINARY_API_SECRET,
 
-  diditApiKey: process.env.DIDIT_API_KEY,
-  diditWebhookSecret: process.env.DIDIT_WEBHOOK_SECRET,
-  diditWorkflowId: process.env.DIDIT_WORKFLOW_ID,
+  // diditApiKey: process.env.DIDIT_API_KEY,
+  // diditWebhookSecret: process.env.DIDIT_WEBHOOK_SECRET,
+  // diditWorkflowId: process.env.DIDIT_WORKFLOW_ID,
 
   url: {
     base_url: process.env.BASE_URL,
@@ -38,21 +38,21 @@ export default {
 
   sendgrid_api_key: process.env.SENDGRID_API_KEY,
   email_sender: process.env.EMAIL_SENDER,
-  twilio_account_sid: process.env.TWILIO_ACCOUNT_SID,
-  twilio_auth_token: process.env.TWILIO_AUTH_TOKEN,
-  twilio_phone_number: process.env.TWILIO_PHONE_NUMBER,
+  // twilio_account_sid: process.env.TWILIO_ACCOUNT_SID,
+  // twilio_auth_token: process.env.TWILIO_AUTH_TOKEN,
+  // twilio_phone_number: process.env.TWILIO_PHONE_NUMBER,
 
-  gatewayApiToken: process.env.GATEWAY_API_TOKEN,
-  gatewayApiSender: process.env.GATEWAY_API_SENDER,
+  // gatewayApiToken: process.env.GATEWAY_API_TOKEN,
+  // gatewayApiSender: process.env.GATEWAY_API_SENDER,
 
-  aws_access_key: process.env.AWS_ACCESS_KEY,
-  aws_secret_key: process.env.AWS_SECRET_KEY,
+  // aws_access_key: process.env.AWS_ACCESS_KEY,
+  // aws_secret_key: process.env.AWS_SECRET_KEY,
 
-  appleSharedSecret: process.env.APPLE_SHARED_SECRET,
+  // appleSharedSecret: process.env.APPLE_SHARED_SECRET,
 
-  revenueCatWebhookSecret: process.env.REVENUECAT_WEBHOOK_SECRET,
+  // revenueCatWebhookSecret: process.env.REVENUECAT_WEBHOOK_SECRET,
 
-  revenueCatEnabled: process.env.REVENUECAT_ENABLED === 'true',
+  // revenueCatEnabled: process.env.REVENUECAT_ENABLED === 'true',
 
   firebaseProjectId: process.env.FIREBASE_PROJECT_ID,
   firebaseClientEmail: process.env.FIREBASE_CLIENT_EMAIL,

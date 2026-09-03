@@ -7,14 +7,7 @@ import {
   decryptProfileCard,
   encryptProfileCard,
 } from '../../utils/profileCardCrypto';
-// import { createAuditLog } from '../../utils/createAuditLog';
 import { TProfileCardPayload } from './user.interface';
-import { createAuditLog } from '../../utils/createAuditLog';
-import mongoose from 'mongoose';
-import { DocumentModel } from '../document/document.model';
-import { SignRequestModel } from '../signRequest/signRequest.model';
-import { AuditLogModel } from '../auditLog/auditLog.model';
-import { SignatureModel } from '../signature/signature.model';
 
 const updatePasswordAndProfileIntoDB = async (
   userId: string,
@@ -177,98 +170,98 @@ const submitEidVerificationIntoDB = async (
   return updatedUser;
 };
 
-const logBiometricCheckIntoDB = async (userId: string, verified: boolean) => {
-  const user = await UserModel.findById(userId).select('role');
+// const logBiometricCheckIntoDB = async (userId: string, verified: boolean) => {
+//   const user = await UserModel.findById(userId).select('role');
 
-  if (!user) {
-    return throwAppError('userId', 'User not found', StatusCodes.NOT_FOUND);
-  }
+//   if (!user) {
+//     return throwAppError('userId', 'User not found', StatusCodes.NOT_FOUND);
+//   }
 
-  await createAuditLog({
-    actorId: userId,
-    actorRole: user.role,
-    action: 'biometric_check',
-    description: `Biometric verification ${verified ? 'succeeded' : 'failed'}`,
-  });
+//   await createAuditLog({
+//     actorId: userId,
+//     actorRole: user.role,
+//     action: 'biometric_check',
+//     description: `Biometric verification ${verified ? 'succeeded' : 'failed'}`,
+//   });
 
-  return { success: verified };
-};
+//   return { success: verified };
+// };
 
-const deleteUserPermanentlyFromDb = async (userId: string) => {
-  const session = await mongoose.startSession();
-  session.startTransaction();
+// const deleteUserPermanentlyFromDb = async (userId: string) => {
+//   const session = await mongoose.startSession();
+//   session.startTransaction();
 
-  try {
-    // 1. Fetch user to verify existence and extract email
-    const user = await UserModel.findById(userId).session(session);
-    if (!user) {
-      throwAppError('user', 'User not found', StatusCodes.NOT_FOUND);
-      return;
-    }
+//   try {
+//     // 1. Fetch user to verify existence and extract email
+//     const user = await UserModel.findById(userId).session(session);
+//     if (!user) {
+//       throwAppError('user', 'User not found', StatusCodes.NOT_FOUND);
+//       return;
+//     }
 
-    const stringUserId = String(user._id);
+//     const stringUserId = String(user._id);
 
-    // 2. Collect all Document IDs owned by the user (as Sender)
-    const userDocuments = await DocumentModel.find(
-      { senderId: stringUserId },
-      { _id: 1 },
-    ).session(session);
-    const documentIds = userDocuments.map((doc) => String(doc._id));
+//     // 2. Collect all Document IDs owned by the user (as Sender)
+//     const userDocuments = await DocumentModel.find(
+//       { senderId: stringUserId },
+//       { _id: 1 },
+//     ).session(session);
+//     const documentIds = userDocuments.map((doc) => String(doc._id));
 
-    // 3. Collect all SignRequest IDs created by the user (as Sender)
-    const userSignRequests = await SignRequestModel.find(
-      { senderId: stringUserId },
-      { _id: 1 },
-    ).session(session);
-    const signRequestIds = userSignRequests.map((sr) => String(sr._id));
+//     // 3. Collect all SignRequest IDs created by the user (as Sender)
+//     const userSignRequests = await SignRequestModel.find(
+//       { senderId: stringUserId },
+//       { _id: 1 },
+//     ).session(session);
+//     const signRequestIds = userSignRequests.map((sr) => String(sr._id));
 
-    // 4. Delete all Audit Logs linked by actorId OR linked documentIds / signRequestIds
-    await AuditLogModel.deleteMany({
-      $or: [
-        { actorId: stringUserId },
-        ...(documentIds.length > 0
-          ? [{ documentId: { $in: documentIds } }]
-          : []),
-        ...(signRequestIds.length > 0
-          ? [{ signRequestId: { $in: signRequestIds } }]
-          : []),
-      ],
-    }).session(session);
+//     // 4. Delete all Audit Logs linked by actorId OR linked documentIds / signRequestIds
+//     await AuditLogModel.deleteMany({
+//       $or: [
+//         { actorId: stringUserId },
+//         ...(documentIds.length > 0
+//           ? [{ documentId: { $in: documentIds } }]
+//           : []),
+//         ...(signRequestIds.length > 0
+//           ? [{ signRequestId: { $in: signRequestIds } }]
+//           : []),
+//       ],
+//     }).session(session);
 
-    // 5. Delete all Signatures linked by signerId/email OR linked documentIds / signRequestIds
-    await SignatureModel.deleteMany({
-      $or: [
-        { signerId: stringUserId },
-        { signerEmail: user.email },
-        ...(documentIds.length > 0
-          ? [{ documentId: { $in: documentIds } }]
-          : []),
-        ...(signRequestIds.length > 0
-          ? [{ signRequestId: { $in: signRequestIds } }]
-          : []),
-      ],
-    }).session(session);
+//     // 5. Delete all Signatures linked by signerId/email OR linked documentIds / signRequestIds
+//     await SignatureModel.deleteMany({
+//       $or: [
+//         { signerId: stringUserId },
+//         { signerEmail: user.email },
+//         ...(documentIds.length > 0
+//           ? [{ documentId: { $in: documentIds } }]
+//           : []),
+//         ...(signRequestIds.length > 0
+//           ? [{ signRequestId: { $in: signRequestIds } }]
+//           : []),
+//       ],
+//     }).session(session);
 
-    // 6. Delete SignRequests owned by user
-    await SignRequestModel.deleteMany({ senderId: stringUserId }).session(
-      session,
-    );
+//     // 6. Delete SignRequests owned by user
+//     await SignRequestModel.deleteMany({ senderId: stringUserId }).session(
+//       session,
+//     );
 
-    // 7. Delete Documents owned by user
-    await DocumentModel.deleteMany({ senderId: stringUserId }).session(session);
+//     // 7. Delete Documents owned by user
+//     await DocumentModel.deleteMany({ senderId: stringUserId }).session(session);
 
-    // 8. Delete the User document itself
-    await UserModel.findByIdAndDelete(user._id).session(session);
+//     // 8. Delete the User document itself
+//     await UserModel.findByIdAndDelete(user._id).session(session);
 
-    await session.commitTransaction();
-    return { success: true };
-  } catch (error) {
-    await session.abortTransaction();
-    throw error;
-  } finally {
-    session.endSession();
-  }
-};
+//     await session.commitTransaction();
+//     return { success: true };
+//   } catch (error) {
+//     await session.abortTransaction();
+//     throw error;
+//   } finally {
+//     session.endSession();
+//   }
+// };
 
 export const UserServices = {
   updatePasswordAndProfileIntoDB,
@@ -276,6 +269,4 @@ export const UserServices = {
   getProfileCardFromDB,
   decodeProfileCard,
   submitEidVerificationIntoDB,
-  logBiometricCheckIntoDB,
-  deleteUserPermanentlyFromDb,
 };

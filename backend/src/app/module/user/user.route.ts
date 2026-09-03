@@ -7,7 +7,6 @@ import { StatusCodes } from 'http-status-codes';
 import { validateRequest } from '../../middlewares/validateRequest';
 import {
   decodeProfileCardValidationSchema,
-  logBiometricCheckValidationSchema,
   submitEidVerificationValidationSchema,
   updatePasswordAndProfileValidationSchema,
 } from './user.validation';
@@ -65,17 +64,17 @@ router.post(
   UserControllers.submitEidVerification,
 );
 
-router.post(
-  '/verify/biometric',
-  auth(USER_ROLE.sender, USER_ROLE.signer),
-  validateRequest(logBiometricCheckValidationSchema),
-  UserControllers.logBiometricCheck,
-);
+// router.post(
+//   '/verify/biometric',
+//   auth(USER_ROLE.sender, USER_ROLE.signer),
+//   validateRequest(logBiometricCheckValidationSchema),
+//   UserControllers.logBiometricCheck,
+// );
 
-router.delete(
-  '/delete/me',
-  auth(USER_ROLE.sender, USER_ROLE.signer),
-  UserControllers.deleteUserPermanently,
-);
+// router.delete(
+//   '/delete/me',
+//   auth(USER_ROLE.sender, USER_ROLE.signer),
+//   UserControllers.deleteUserPermanently,
+// );
 
 export const UserRoutes = router;

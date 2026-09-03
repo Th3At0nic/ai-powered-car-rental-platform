@@ -80,32 +80,32 @@ const submitEidVerification = catchAsync(async (req, res) => {
   );
 });
 
-const logBiometricCheck = catchAsync(async (req, res) => {
-  const { userId } = req.user as JwtPayload;
-  const { verified } = req.body;
+// const logBiometricCheck = catchAsync(async (req, res) => {
+//   const { userId } = req.user as JwtPayload;
+//   const { verified } = req.body;
 
-  const result = await UserServices.logBiometricCheckIntoDB(userId, verified);
-  sendResponse(
-    res,
-    StatusCodes.OK,
-    true,
-    'Biometric check logged successfully',
-    result,
-  );
-});
+//   const result = await UserServices.logBiometricCheckIntoDB(userId, verified);
+//   sendResponse(
+//     res,
+//     StatusCodes.OK,
+//     true,
+//     'Biometric check logged successfully',
+//     result,
+//   );
+// });
 
-const deleteUserPermanently = catchAsync(async (req, res) => {
-  const { userId } = req.user as JwtPayload;
+// const deleteUserPermanently = catchAsync(async (req, res) => {
+//   const { userId } = req.user as JwtPayload;
 
-  const result = await UserServices.deleteUserPermanentlyFromDb(userId);
-  sendResponse(
-    res,
-    StatusCodes.OK,
-    true,
-    'User account and all associated records deleted successfully.',
-    result,
-  );
-});
+//   const result = await UserServices.deleteUserPermanentlyFromDb(userId);
+//   sendResponse(
+//     res,
+//     StatusCodes.OK,
+//     true,
+//     'User account and all associated records deleted successfully.',
+//     result,
+//   );
+// });
 
 export const UserControllers = {
   updatePasswordAndProfile,
@@ -113,6 +113,6 @@ export const UserControllers = {
   getProfileCard,
   decodeProfileCard,
   submitEidVerification,
-  logBiometricCheck,
-  deleteUserPermanently,
+  // logBiometricCheck,
+  // deleteUserPermanently,
 };
