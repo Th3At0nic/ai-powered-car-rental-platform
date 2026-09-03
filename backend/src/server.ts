@@ -2,7 +2,6 @@ import { Server } from 'http';
 import app from './app';
 import config from './app/config';
 import mongoose from 'mongoose';
-import { seedSubscriptionPlans } from './app/utils/seedSubscriptionPlans';
 
 let server: Server;
 
@@ -13,9 +12,6 @@ async function main() {
     server = app.listen(config.port, () => {
       console.log(`Example app listening on port ${config.port}`);
     });
-
-    //seed plans into the DB if there is none
-    await seedSubscriptionPlans();
   } catch (err) {
     console.log(err);
   }
