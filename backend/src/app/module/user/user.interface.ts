@@ -12,23 +12,6 @@ export type TUser = {
   password: string | null;
   profilePic?: string;
   isEmailVerified: boolean;
-  isIdentityVerified: boolean;
-  identityVerificationMethod: 'eID' | 'passport' | null;
-  identityVerifiedAt: Date | null;
-  identityVerificationId: string | null;
-  identityVerificationStatus: 'pending' | 'verified' | 'failed' | null;
-  diditVerified?: boolean;
-  diditVerifiedAt?: Date;
-  diditVerificationExpiresAt?: Date;
-  diditSessionId?: string;
-  diditPlatform?: 'ios' | 'android' | null;
-  diditVerificationStatus?:
-    | 'not_started'
-    | 'pending'
-    | 'approved'
-    | 'declined'
-    | 'in_review';
-  diditVerificationResult?: Record<string, unknown>;
   role: 'sender' | 'signer';
   otp?: string;
   otpExpiresAt?: Date;
@@ -48,15 +31,5 @@ export interface IUser extends Model<TUser> {
   ): Promise<boolean>;
 }
 
-export type TProfileCardPayload = {
-  userId: string;
-  fullName: string;
-  email: string;
-  phone?: string;
-  profilePhoto?: string;
-  // isIdentityVerified?: boolean;
-  diditVerified: boolean;
-  appId: 'hoppmanngolf';
-};
 
 export type TUserRole = keyof typeof USER_ROLE;

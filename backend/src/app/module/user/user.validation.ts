@@ -25,26 +25,26 @@ export const updatePasswordAndProfileValidationSchema = z.object({
     ),
 });
 
-export const decodeProfileCardValidationSchema = z.object({
-  body: z.object({
-    encryptedPayload: z.string().min(1, 'Encrypted payload is required'),
-  }),
-});
+// export const decodeProfileCardValidationSchema = z.object({
+//   body: z.object({
+//     encryptedPayload: z.string().min(1, 'Encrypted payload is required'),
+//   }),
+// });
 
-export const submitEidVerificationValidationSchema = z.object({
-  body: z.object({
-    verified: z.boolean({
-      required_error: 'Verification status is required',
-    }),
+// export const submitEidVerificationValidationSchema = z.object({
+//   body: z.object({
+//     verified: z.boolean({
+//       required_error: 'Verification status is required',
+//     }),
 
-    verificationId: z.string().min(1, 'Verification ID is required'),
-  }),
-});
+//     verificationId: z.string().min(1, 'Verification ID is required'),
+//   }),
+// });
 
-export const logBiometricCheckValidationSchema = z.object({
-  body: z.object({
-    verified: z.boolean({
-      required_error: 'Verification status is required',
-    }),
-  }),
-});
+// export const logBiometricCheckValidationSchema = z.object({
+//   body: z.object({
+//     verified: z.boolean({
+//       required_error: 'Verification status is required',
+//     }),
+//   }),
+// });
