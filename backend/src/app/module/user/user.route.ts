@@ -40,10 +40,4 @@ router.get(
   UserControllers.getMyProfile,
 );
 
-router.get(
-  '/profile-card',
-  auth(USER_ROLE.sender, USER_ROLE.signer),
-  UserControllers.getProfileCard,
-);
-
 export const UserRoutes = router;
