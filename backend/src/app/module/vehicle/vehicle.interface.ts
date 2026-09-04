@@ -1,10 +1,4 @@
-/* eslint-disable no-unused-vars */
-import { Model } from 'mongoose';
-import {
-  TFuelType,
-  TVehicleCategory,
-  TTransmission,
-} from './vehicle.constant';
+import { TFuelType, TVehicleCategory, TTransmission } from './vehicle.constant';
 
 export type TVehicle = {
   _id?: string;
@@ -24,5 +18,3 @@ export type TVehicle = {
   createdAt?: Date;
   updatedAt?: Date;
 };
-
-export interface IVehicle extends Model<TVehicle> {}

@@ -1,5 +1,5 @@
 import { model, Schema } from 'mongoose';
-import { IVehicle, TVehicle } from './vehicle.interface';
+import { TVehicle } from './vehicle.interface';
 import { FUEL_TYPE, TRANSMISSION, VEHICLE_CATEGORY } from './vehicle.constant';
 
 const vehicleSchema = new Schema<TVehicle>(
@@ -86,4 +86,4 @@ const vehicleSchema = new Schema<TVehicle>(
   },
 );
 
-export const VehicleModel = model<TVehicle, IVehicle>('Vehicle', vehicleSchema);
+export const VehicleModel = model<TVehicle>('Vehicle', vehicleSchema);
