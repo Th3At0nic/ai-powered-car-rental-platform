@@ -26,25 +26,6 @@ const resendOTP = catchAsync(async (req, res, next) => {
   sendResponse(res, StatusCodes.OK, true, result?.message as string, null);
 });
 
-const registerOrLoginWithGoogle = catchAsync(async (req, res, next) => {
-  const result = await authServices.registerOrLoginWithGoogleIntoDB(req.body);
-  const { accessToken, refreshToken, user } = result!;
-
-  //   res.cookie('refreshToken', refreshToken, {
-  //   httpOnly: true, // Prevents client-side JavaScript from accessing the cookie
-  //   secure: process.env.NODE_ENV === 'production', // Ensures the cookie is sent only over HTTPS in production
-  //   sameSite: 'lax', // Prevents CSRF attacks
-  //   maxAge: 24 * 60 * 60 * 1000, // 1 day in milliseconds
-  // });
-
-  const message = 'Login with google Successful!';
-  sendResponse(res, StatusCodes.OK, true, message, {
-    accessToken,
-    refreshToken,
-    user,
-  });
-});
-
 const registerOrLoginWithApple = catchAsync(async (req, res, next) => {
   let profilePic: string = '';
   if (req.file) {
@@ -121,7 +102,6 @@ export const authControllers = {
   registerWithEmail,
   verifyOTP,
   resendOTP,
-  registerOrLoginWithGoogle,
   registerOrLoginWithApple,
   loginWithEmail,
   forgetPassword,

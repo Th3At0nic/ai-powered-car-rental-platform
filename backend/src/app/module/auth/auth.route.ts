@@ -3,7 +3,6 @@ import { validateRequest } from '../../middlewares/validateRequest';
 import {
   forgetPasswordValidationSchema,
   loginWithEmailValidationSchema,
-  loginWithGoogleValidationSchema,
   registerWithEmailValidationSchema,
   resendOTPValidationSchema,
   verifyOTPValidationSchema,
@@ -36,12 +35,6 @@ router.post(
   '/resend-otp',
   validateRequest(resendOTPValidationSchema),
   authControllers.resendOTP,
-);
-
-router.post(
-  '/login/google',
-  validateRequest(loginWithGoogleValidationSchema),
-  authControllers.registerOrLoginWithGoogle,
 );
 
 router.post(

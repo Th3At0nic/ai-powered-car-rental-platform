@@ -38,81 +38,36 @@ const getMyProfile = catchAsync(async (req, res) => {
   );
 });
 
-const getProfileCard = catchAsync(async (req, res) => {
-  const { userId } = req.user as JwtPayload;
+// const logBiometricCheck = catchAsync(async (req, res) => {
+//   const { userId } = req.user as JwtPayload;
+//   const { verified } = req.body;
 
-  const result = await UserServices.getProfileCardFromDB(userId);
-  sendResponse(
-    res,
-    StatusCodes.OK,
-    true,
-    'Profile card generated successfully',
-    result,
-  );
-});
+//   const result = await UserServices.logBiometricCheckIntoDB(userId, verified);
+//   sendResponse(
+//     res,
+//     StatusCodes.OK,
+//     true,
+//     'Biometric check logged successfully',
+//     result,
+//   );
+// });
 
-const decodeProfileCard = catchAsync(async (req, res) => {
-  const { encryptedPayload } = req.body;
+// const deleteUserPermanently = catchAsync(async (req, res) => {
+//   const { userId } = req.user as JwtPayload;
 
-  const result = await UserServices.decodeProfileCard(encryptedPayload);
-  sendResponse(
-    res,
-    StatusCodes.OK,
-    true,
-    'Profile card decoded successfully',
-    result,
-  );
-});
-
-const submitEidVerification = catchAsync(async (req, res) => {
-  const { userId } = req.user as JwtPayload;
-
-  const result = await UserServices.submitEidVerificationIntoDB(
-    userId,
-    req.body,
-  );
-  sendResponse(
-    res,
-    StatusCodes.OK,
-    true,
-    'eID verification submitted successfully',
-    result,
-  );
-});
-
-const logBiometricCheck = catchAsync(async (req, res) => {
-  const { userId } = req.user as JwtPayload;
-  const { verified } = req.body;
-
-  const result = await UserServices.logBiometricCheckIntoDB(userId, verified);
-  sendResponse(
-    res,
-    StatusCodes.OK,
-    true,
-    'Biometric check logged successfully',
-    result,
-  );
-});
-
-const deleteUserPermanently = catchAsync(async (req, res) => {
-  const { userId } = req.user as JwtPayload;
-
-  const result = await UserServices.deleteUserPermanentlyFromDb(userId);
-  sendResponse(
-    res,
-    StatusCodes.OK,
-    true,
-    'User account and all associated records deleted successfully.',
-    result,
-  );
-});
+//   const result = await UserServices.deleteUserPermanentlyFromDb(userId);
+//   sendResponse(
+//     res,
+//     StatusCodes.OK,
+//     true,
+//     'User account and all associated records deleted successfully.',
+//     result,
+//   );
+// });
 
 export const UserControllers = {
   updatePasswordAndProfile,
   getMyProfile,
-  getProfileCard,
-  decodeProfileCard,
-  submitEidVerification,
-  logBiometricCheck,
-  deleteUserPermanently,
+  // logBiometricCheck,
+  // deleteUserPermanently,
 };

@@ -8,7 +8,6 @@ import jwt, { JwtPayload } from 'jsonwebtoken';
 import {
   TAppleJwtPayload,
   TForgetPasswordParams,
-  TGoogleToken,
   TLoginWithEmailParams,
   TRegisterWithEmail,
   TResendOTPParams,
@@ -24,7 +23,6 @@ import {
   RESEND_INTERVAL_MS,
   RESET_WINDOW_MS,
 } from './auth.constants';
-import { verifyGoogleToken } from '../../utils/verifyGoogleToken';
 import { verifyAppleToken } from '../../utils/verifyAppleToken';
 
 const registerWithEmailIntoDB = async (payload: TRegisterWithEmail) => {
@@ -281,75 +279,6 @@ const resendOTPFromDB = async (contact: TResendOTPParams) => {
     'Something went wrong while resending OTP. Please try again.',
     StatusCodes.INTERNAL_SERVER_ERROR,
   );
-};
-
-const registerOrLoginWithGoogleIntoDB = async (payload: TGoogleToken) => {
-  // let user: Omit<TUser, '_id'> | null = null;
-  let user = null;
-
-  //if payload sent rather than googleToken  then it works
-  const googleUser = await verifyGoogleToken(payload.idToken);
-
-  if (!googleUser?.emailVerified) {
-    throwAppError(
-      'email',
-      'Google account email is not verified. Please verify your email with Google and try again.',
-      StatusCodes.FORBIDDEN,
-    );
-    return;
-  }
-
-  user = await UserModel.isUserExists(googleUser.email as string);
-
-  if (!user) {
-    user = {
-      fullName: googleUser.name as string,
-      email: googleUser.email as string,
-      password: null,
-      googleId: googleUser.googleId as string,
-      profilePic: googleUser.photoURL || null,
-      provider: providerTypes.google,
-      role: payload.role,
-      isEmailVerified: true, // Google users are considered verified
-    };
-
-    user = await UserModel.create(user);
-
-    if (!user) {
-      throwAppError(
-        'user',
-        'Failed to create user. Please try again later.',
-        StatusCodes.INTERNAL_SERVER_ERROR,
-      );
-    }
-  }
-
-  const jwtPayload = {
-    userId: (user as TUser)._id as string,
-    userEmail: user?.email as string,
-    role: user?.role as string,
-  };
-
-  // create access token and send it to the client
-  const accessToken = generateToken(
-    jwtPayload,
-    config.jwt_access_secret as string,
-    config.jwt_access_expires_in as string,
-  );
-
-  const refreshToken = generateToken(
-    jwtPayload,
-    config.jwt_refresh_secret as string,
-    config.jwt_refresh_expires_in as string,
-  );
-
-  user!.password = null; // Nullify password in memory
-
-  return {
-    accessToken,
-    refreshToken,
-    user,
-  };
 };
 
 const registerOrLoginWithAppleIntoDB = async (payload: {
@@ -667,7 +596,6 @@ export const authServices = {
   registerWithEmailIntoDB,
   verifyOTPIntoDB,
   resendOTPFromDB,
-  registerOrLoginWithGoogleIntoDB,
   registerOrLoginWithAppleIntoDB,
   loginWithEmailIntoDB,
   forgetPasswordIntoDB,

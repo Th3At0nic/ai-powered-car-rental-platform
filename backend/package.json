@@ -1,5 +1,5 @@
 {
-  "name": "hoppmangolf-backend",
+  "name": "drive-pilot",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
@@ -10,7 +10,8 @@
     "start": "node dist/server.js",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "format": "prettier . --write"
+    "format": "prettier . --write",
+    "db:seed": "ts-node src/app/db/seed.ts"
   },
   "keywords": [],
   "author": "",

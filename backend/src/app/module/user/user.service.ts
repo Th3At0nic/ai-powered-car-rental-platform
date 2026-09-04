@@ -3,18 +3,6 @@ import throwAppError from '../../utils/throwAppError';
 import { TUpdatePasswordAndProfileParams } from '../auth/auth.interface';
 import { UserModel } from './user.model';
 import { providerTypes } from './user.constant';
-import {
-  decryptProfileCard,
-  encryptProfileCard,
-} from '../../utils/profileCardCrypto';
-// import { createAuditLog } from '../../utils/createAuditLog';
-import { TProfileCardPayload } from './user.interface';
-import { createAuditLog } from '../../utils/createAuditLog';
-import mongoose from 'mongoose';
-import { DocumentModel } from '../document/document.model';
-import { SignRequestModel } from '../signRequest/signRequest.model';
-import { AuditLogModel } from '../auditLog/auditLog.model';
-import { SignatureModel } from '../signature/signature.model';
 
 const updatePasswordAndProfileIntoDB = async (
   userId: string,
@@ -111,171 +99,36 @@ const getMyProfileFromDB = async (userId: string) => {
   return result;
 };
 
-const getProfileCardFromDB = async (userId: string) => {
-  const user = await UserModel.findById(userId);
+// const submitEidVerificationIntoDB = async (
+//   userId: string,
+//   body: { verified: boolean; verificationId: string },
+// ) => {
+//   const { verified, verificationId } = body;
 
-  if (!user) {
-    return throwAppError('userId', 'User not found', StatusCodes.NOT_FOUND);
-  }
+//   const updatePayload = verified
+//     ? {
+//         isIdentityVerified: true,
+//         identityVerificationMethod: 'eID',
+//         identityVerifiedAt: new Date(),
+//         identityVerificationId: verificationId,
+//         identityVerificationStatus: 'verified',
+//       }
+//     : {
+//         identityVerificationStatus: 'failed',
+//       };
 
-  const payload: TProfileCardPayload = {
-    userId: String(user._id),
-    fullName: user.fullName,
-    email: user.email,
-    // ...(user.phone && { phone: user.phone }), // only include if exists
-    profilePhoto: user.profilePic,
-    // isIdentityVerified: user.isIdentityVerified,
-    diditVerified: user.diditVerified as boolean,
-    appId: 'hoppmanngolf',
-  };
+//   const updatedUser = await UserModel.findByIdAndUpdate(userId, updatePayload, {
+//     new: true,
+//   }).select('-password -__v');
 
-  const encryptedPayload = encryptProfileCard(payload);
+//   if (!updatedUser) {
+//     return throwAppError('userId', 'User not found', StatusCodes.NOT_FOUND);
+//   }
 
-  return { encryptedPayload };
-};
-
-const decodeProfileCard = async (encryptedPayload: string) => {
-  const decoded = decryptProfileCard(encryptedPayload) as TProfileCardPayload;
-
-  if (decoded.appId !== 'hoppmanngolf') {
-    throwAppError(
-      'appId',
-      'This card was not issued by this application',
-      StatusCodes.BAD_REQUEST,
-    );
-  }
-
-  return decoded;
-};
-
-const submitEidVerificationIntoDB = async (
-  userId: string,
-  body: { verified: boolean; verificationId: string },
-) => {
-  const { verified, verificationId } = body;
-
-  const updatePayload = verified
-    ? {
-        isIdentityVerified: true,
-        identityVerificationMethod: 'eID',
-        identityVerifiedAt: new Date(),
-        identityVerificationId: verificationId,
-        identityVerificationStatus: 'verified',
-      }
-    : {
-        identityVerificationStatus: 'failed',
-      };
-
-  const updatedUser = await UserModel.findByIdAndUpdate(userId, updatePayload, {
-    new: true,
-  }).select('-password -__v');
-
-  if (!updatedUser) {
-    return throwAppError('userId', 'User not found', StatusCodes.NOT_FOUND);
-  }
-
-  return updatedUser;
-};
-
-const logBiometricCheckIntoDB = async (userId: string, verified: boolean) => {
-  const user = await UserModel.findById(userId).select('role');
-
-  if (!user) {
-    return throwAppError('userId', 'User not found', StatusCodes.NOT_FOUND);
-  }
-
-  await createAuditLog({
-    actorId: userId,
-    actorRole: user.role,
-    action: 'biometric_check',
-    description: `Biometric verification ${verified ? 'succeeded' : 'failed'}`,
-  });
-
-  return { success: verified };
-};
-
-const deleteUserPermanentlyFromDb = async (userId: string) => {
-  const session = await mongoose.startSession();
-  session.startTransaction();
-
-  try {
-    // 1. Fetch user to verify existence and extract email
-    const user = await UserModel.findById(userId).session(session);
-    if (!user) {
-      throwAppError('user', 'User not found', StatusCodes.NOT_FOUND);
-      return;
-    }
-
-    const stringUserId = String(user._id);
-
-    // 2. Collect all Document IDs owned by the user (as Sender)
-    const userDocuments = await DocumentModel.find(
-      { senderId: stringUserId },
-      { _id: 1 },
-    ).session(session);
-    const documentIds = userDocuments.map((doc) => String(doc._id));
-
-    // 3. Collect all SignRequest IDs created by the user (as Sender)
-    const userSignRequests = await SignRequestModel.find(
-      { senderId: stringUserId },
-      { _id: 1 },
-    ).session(session);
-    const signRequestIds = userSignRequests.map((sr) => String(sr._id));
-
-    // 4. Delete all Audit Logs linked by actorId OR linked documentIds / signRequestIds
-    await AuditLogModel.deleteMany({
-      $or: [
-        { actorId: stringUserId },
-        ...(documentIds.length > 0
-          ? [{ documentId: { $in: documentIds } }]
-          : []),
-        ...(signRequestIds.length > 0
-          ? [{ signRequestId: { $in: signRequestIds } }]
-          : []),
-      ],
-    }).session(session);
-
-    // 5. Delete all Signatures linked by signerId/email OR linked documentIds / signRequestIds
-    await SignatureModel.deleteMany({
-      $or: [
-        { signerId: stringUserId },
-        { signerEmail: user.email },
-        ...(documentIds.length > 0
-          ? [{ documentId: { $in: documentIds } }]
-          : []),
-        ...(signRequestIds.length > 0
-          ? [{ signRequestId: { $in: signRequestIds } }]
-          : []),
-      ],
-    }).session(session);
-
-    // 6. Delete SignRequests owned by user
-    await SignRequestModel.deleteMany({ senderId: stringUserId }).session(
-      session,
-    );
-
-    // 7. Delete Documents owned by user
-    await DocumentModel.deleteMany({ senderId: stringUserId }).session(session);
-
-    // 8. Delete the User document itself
-    await UserModel.findByIdAndDelete(user._id).session(session);
-
-    await session.commitTransaction();
-    return { success: true };
-  } catch (error) {
-    await session.abortTransaction();
-    throw error;
-  } finally {
-    session.endSession();
-  }
-};
+//   return updatedUser;
+// };
 
 export const UserServices = {
   updatePasswordAndProfileIntoDB,
   getMyProfileFromDB,
-  getProfileCardFromDB,
-  decodeProfileCard,
-  submitEidVerificationIntoDB,
-  logBiometricCheckIntoDB,
-  deleteUserPermanentlyFromDb,
 };
