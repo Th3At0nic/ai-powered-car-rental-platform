@@ -31,7 +31,7 @@ export type TVehicleQueryParams = {
   fields?: string;
 };
 
-export type TVehicleResponse = {
+export type TVehicleListResponse = {
   success: boolean;
   message: string;
   data: {
@@ -43,4 +43,10 @@ export type TVehicleResponse = {
     };
     data: TVehicle[];
   };
+};
+
+export type TVehicleSingleResponse = {
+  success: boolean;
+  message: string;
+  data: TVehicle;
 };
