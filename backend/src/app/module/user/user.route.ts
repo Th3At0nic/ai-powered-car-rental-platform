@@ -5,11 +5,7 @@ import { upload } from '../../utils/upload';
 import throwAppError from '../../utils/throwAppError';
 import { StatusCodes } from 'http-status-codes';
 import { validateRequest } from '../../middlewares/validateRequest';
-import {
-  decodeProfileCardValidationSchema,
-  submitEidVerificationValidationSchema,
-  updatePasswordAndProfileValidationSchema,
-} from './user.validation';
+import { updatePasswordAndProfileValidationSchema } from './user.validation';
 import { UserControllers } from './user.controller';
 
 const router = Router();
@@ -49,32 +45,5 @@ router.get(
   auth(USER_ROLE.sender, USER_ROLE.signer),
   UserControllers.getProfileCard,
 );
-
-router.post(
-  '/profile-card/decode',
-  auth(USER_ROLE.sender, USER_ROLE.signer),
-  validateRequest(decodeProfileCardValidationSchema),
-  UserControllers.decodeProfileCard,
-);
-
-router.post(
-  '/verify/eid',
-  auth(USER_ROLE.sender, USER_ROLE.signer),
-  validateRequest(submitEidVerificationValidationSchema),
-  UserControllers.submitEidVerification,
-);
-
-// router.post(
-//   '/verify/biometric',
-//   auth(USER_ROLE.sender, USER_ROLE.signer),
-//   validateRequest(logBiometricCheckValidationSchema),
-//   UserControllers.logBiometricCheck,
-// );
-
-// router.delete(
-//   '/delete/me',
-//   auth(USER_ROLE.sender, USER_ROLE.signer),
-//   UserControllers.deleteUserPermanently,
-// );
 
 export const UserRoutes = router;
