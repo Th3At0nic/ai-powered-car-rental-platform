@@ -8,11 +8,12 @@ import { ProtectedRoute } from "../components/layout/ProtectedRoute";
 import { routesGenerator } from "../utils/routesGenerator";
 import { adminPaths } from "./adminRoutes";
 import { userPaths } from "./userRoutes";
+import CustomerHome from "../pages/CustomerHome";
 
 export const router = createBrowserRouter([
   {
     path: "/",
-    element: <App />,
+    element: <CustomerHome />,
     children: [
       {
         path: "about",
