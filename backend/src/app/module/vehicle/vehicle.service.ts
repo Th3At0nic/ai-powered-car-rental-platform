@@ -19,43 +19,7 @@ const createVehicleIntoDB = async (payload: TVehicle) => {
 };
 
 const getAllVehiclesFromDB = async (query: Record<string, unknown>) => {
-  const { minPrice, maxPrice, minSeats, isAvailable, ...queryForBuilder } =
-    query;
-
-  const customFilter: Record<string, unknown> = {};
-
-  // Price range filtering
-  if (minPrice || maxPrice) {
-    customFilter.pricePerDay = {};
-
-    if (minPrice) {
-      (customFilter.pricePerDay as Record<string, number>).$gte =
-        Number(minPrice);
-    }
-
-    if (maxPrice) {
-      (customFilter.pricePerDay as Record<string, number>).$lte =
-        Number(maxPrice);
-    }
-  }
-
-  // Minimum seats filtering
-  if (minSeats) {
-    customFilter.seats = {
-      $gte: Number(minSeats),
-    };
-  }
-
-  // Availability filtering
-  if (isAvailable !== undefined) {
-    customFilter.isAvailable =
-      isAvailable === true || isAvailable === 'true' || isAvailable === '1';
-  }
-
-  const queryBuilder = new QueryBuilder<TVehicle>(
-    queryForBuilder,
-    VehicleModel.find(customFilter),
-  )
+  const queryBuilder = new QueryBuilder<TVehicle>(query, VehicleModel.find())
     .search(['name', 'brand', 'description', 'location'])
     .filter()
     .sortBy()
