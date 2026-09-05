@@ -5,17 +5,12 @@ import {
   CheckCircleFilled,
   ClockCircleOutlined,
   EnvironmentOutlined,
-  FacebookFilled,
-  InstagramFilled,
-  LinkedinFilled,
-  MenuOutlined,
   SafetyCertificateOutlined,
   SearchOutlined,
   StarFilled,
   UserOutlined,
 } from "@ant-design/icons";
 import { useState, type ReactNode } from "react";
-import { Link } from "react-router-dom";
 import VehicleCard from "../components/customer/VehicleCard";
 import { useGetAllVehiclesQuery } from "../redux/features/vehicle/vehicleApi";
 
@@ -70,7 +65,6 @@ type SearchForm = {
 };
 
 const CustomerHome = () => {
-  const [menuOpen, setMenuOpen] = useState(false);
   const [category, setCategory] = useState("Popular");
   const [showAll, setShowAll] = useState(false);
   const [searchForm, setSearchForm] = useState<SearchForm>({
@@ -163,32 +157,6 @@ const CustomerHome = () => {
 
   return (
     <div className="customer-home">
-      <header className="site-header">
-        <Link to="/" className="brand">
-          <span className="brand-mark">
-            <CarOutlined />
-          </span>
-          Drive<span>Pilot</span>
-        </Link>
-        <button
-          className="menu-toggle"
-          onClick={() => setMenuOpen(!menuOpen)}
-          aria-label="Toggle navigation"
-        >
-          <MenuOutlined />
-        </button>
-        <nav className={menuOpen ? "site-nav is-open" : "site-nav"}>
-          <a href="#home">Home</a>
-          <a href="#how-it-works">How It Works</a>
-          <a href="#deals">Rental Deals</a>
-          <a href="#why-us">Why Choose Us</a>
-          <a href="#testimonials">Testimonial</a>
-          <Link to="/register">Register</Link>
-          <Link to="/login" className="login-button">
-            <UserOutlined /> Login
-          </Link>
-        </nav>
-      </header>
       <main>
         <section className="hero" id="home">
           <div className="hero-copy">
@@ -549,55 +517,6 @@ const CustomerHome = () => {
           </div>
         </section>
       </main>
-      <footer className="site-footer">
-        <div className="footer-main section-shell">
-          <div className="footer-brand">
-            <Link to="/" className="brand">
-              <span className="brand-mark">
-                <CarOutlined />
-              </span>
-              Drive<span>Pilot</span>
-            </Link>
-            <p>
-              Move freely. Go further.
-              <br />
-              Your journey starts with us.
-            </p>
-            <div className="socials">
-              <a href="#footer" aria-label="Facebook">
-                <FacebookFilled />
-              </a>
-              <a href="#footer" aria-label="Instagram">
-                <InstagramFilled />
-              </a>
-              <a href="#footer" aria-label="LinkedIn">
-                <LinkedinFilled />
-              </a>
-            </div>
-          </div>
-          {[
-            ["About", "How it works", "Rental deals", "Why choose us"],
-            ["Community", "Events", "Blog", "Podcast"],
-            ["Socials", "Instagram", "Twitter", "LinkedIn"],
-          ].map(([heading, ...links]) => (
-            <div className="footer-column" key={heading}>
-              <h4>{heading}</h4>
-              {links.map((link) => (
-                <a href="#footer" key={link}>
-                  {link}
-                </a>
-              ))}
-            </div>
-          ))}
-        </div>
-        <div className="footer-bottom section-shell">
-          <span>© 2026 DrivePilot. All rights reserved.</span>
-          <span>
-            <a href="#footer">Privacy Policy</a>
-            <a href="#footer">Terms & Conditions</a>
-          </span>
-        </div>
-      </footer>
     </div>
   );
 };
