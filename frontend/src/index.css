@@ -782,7 +782,7 @@ h2 em {
     display: flex;
     gap: 24px;
 }
-/* 
+
 .vehicle-details-page {
     min-height: 100vh;
     background: #fbfaf7;
@@ -1093,7 +1093,7 @@ h2 em {
     color: #69716f;
     font-size: 13px;
     line-height: 1.7;
-} */
+}
 
 @media (max-width: 900px) {
     .site-nav {
@@ -1126,13 +1126,13 @@ h2 em {
         grid-template-columns: repeat(2, 1fr);
     }
 
-    /* .vehicle-details-card {
+    .vehicle-details-card {
         grid-template-columns: 1fr;
     }
 
     .details-info {
         padding-right: 0;
-    } */
+    }
 }
 
 @media (max-width: 640px) {
@@ -1258,7 +1258,7 @@ h2 em {
         grid-template-columns: 1fr;
     }
 
-    /* .vehicle-details-shell {
+    .vehicle-details-shell {
         padding-top: 24px;
         padding-bottom: 65px;
     }
@@ -1290,7 +1290,7 @@ h2 em {
 
     .details-features {
         grid-template-columns: 1fr;
-    } */
+    }
 
     .why-content {
         gap: 35px;
