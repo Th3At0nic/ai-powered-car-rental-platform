@@ -1,11 +1,6 @@
 export const USER_ROLE = {
-  // admin: 'admin',
-  sender: 'sender',
-  signer: 'signer',
+  admin: "admin",
+  user: "user",
 } as const;
 
-export const providerTypes = {
-  google: 'google',
-  apple: 'apple',
-  email: 'email',
-} as const;
+export type TUserRole = keyof typeof USER_ROLE;

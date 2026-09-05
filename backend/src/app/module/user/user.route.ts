@@ -1,43 +1,15 @@
-import { NextFunction, Request, Response, Router } from 'express';
+import { Router } from 'express';
+
 import { auth } from '../../middlewares/authRequest';
 import { USER_ROLE } from './user.constant';
-import { upload } from '../../utils/upload';
-import throwAppError from '../../utils/throwAppError';
-import { StatusCodes } from 'http-status-codes';
-import { validateRequest } from '../../middlewares/validateRequest';
-import { updatePasswordAndProfileValidationSchema } from './user.validation';
-import { UserControllers } from './user.controller';
+import { userControllers } from './user.controller';
 
 const router = Router();
 
-router.patch(
-  '/update-profile',
-  auth(USER_ROLE.sender, USER_ROLE.signer),
-  upload.single('file'),
-  (req: Request, res: Response, next: NextFunction) => {
-    try {
-      if (req.body?.data) {
-        req.body = JSON.parse(req.body.data);
-      }
-      next();
-    } catch {
-      next(
-        throwAppError(
-          'data',
-          'Invalid JSON format in data field',
-          StatusCodes.BAD_REQUEST,
-        ),
-      );
-    }
-  },
-  validateRequest(updatePasswordAndProfileValidationSchema),
-  UserControllers.updatePasswordAndProfile,
-);
-
 router.get(
   '/me',
-  auth(USER_ROLE.sender, USER_ROLE.signer),
-  UserControllers.getMyProfile,
+  auth(USER_ROLE.user, USER_ROLE.admin),
+  userControllers.getMyProfile,
 );
 
 export const UserRoutes = router;
