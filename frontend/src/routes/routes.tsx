@@ -9,6 +9,7 @@ import { routesGenerator } from "../utils/routesGenerator";
 import { adminPaths } from "./adminRoutes";
 import { userPaths } from "./userRoutes";
 import CustomerHome from "../pages/CustomerHome";
+import VehicleDetails from "../pages/VehicleDetails";
 
 export const router = createBrowserRouter([
   {
@@ -20,6 +21,10 @@ export const router = createBrowserRouter([
         element: <About />,
       },
     ],
+  },
+  {
+    path: "/vehicles/:vehicleId",
+    element: <VehicleDetails />,
   },
   {
     path: "/admin",
