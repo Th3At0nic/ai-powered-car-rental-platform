@@ -270,7 +270,7 @@ const CustomerHome = () => {
                 No vehicles are available for this category yet.
               </div>
             )}
-            {vehicles.length > 8 && (
+            {filtered.length > 8 && (
               <button
                 className="show-more"
                 onClick={() => setShowAll(!showAll)}
