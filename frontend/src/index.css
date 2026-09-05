@@ -782,6 +782,318 @@ h2 em {
     display: flex;
     gap: 24px;
 }
+/* 
+.vehicle-details-page {
+    min-height: 100vh;
+    background: #fbfaf7;
+}
+
+.vehicle-details-shell {
+    padding-top: 34px;
+    padding-bottom: 100px;
+}
+
+.details-back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: #69716f;
+    font-size: 12px;
+}
+
+.details-back-link:hover,
+.details-breadcrumb a:hover {
+    color: #ef654e;
+}
+
+.details-breadcrumb {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 22px 0 25px;
+    color: #9aa09e;
+    font-size: 11px;
+}
+
+.details-breadcrumb strong {
+    color: #17202a;
+    font-weight: 600;
+}
+
+.vehicle-details-card {
+    display: grid;
+    grid-template-columns: 1.05fr .95fr;
+    gap: 48px;
+    padding: 28px;
+    background: white;
+    border: 1px solid #eee7df;
+    border-radius: 14px;
+    box-shadow: 0 15px 40px #17202a0b;
+}
+
+.details-image-wrap {
+    min-height: 430px;
+    overflow: hidden;
+    border-radius: 10px;
+    background: #f3f0ec;
+}
+
+.details-image {
+    width: 100%;
+    height: 100%;
+    min-height: 430px;
+    display: block;
+    object-fit: cover;
+}
+
+.details-info {
+    padding: 13px 8px 8px 0;
+}
+
+.details-heading-row {
+    display: flex;
+    align-items: start;
+    justify-content: space-between;
+    gap: 15px;
+}
+
+.details-heading-row h1 {
+    max-width: 450px;
+    margin-bottom: 13px;
+    font-size: clamp(34px, 4vw, 52px);
+    line-height: 1.03;
+}
+
+.details-rating {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    gap: 6px;
+    color: #ef654e;
+    font-size: 14px;
+}
+
+.details-rating strong {
+    color: #17202a;
+}
+
+.details-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    color: #69716f;
+    font-size: 12px;
+}
+
+.details-meta span {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.details-price {
+    display: flex;
+    align-items: baseline;
+    gap: 5px;
+    margin: 34px 0 14px;
+}
+
+.details-price strong {
+    color: #17202a;
+    font: 700 32px 'Space Grotesk';
+}
+
+.details-price span {
+    color: #7f8784;
+    font-size: 12px;
+}
+
+.details-availability {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    margin-bottom: 25px;
+    color: #37805b;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.details-availability .anticon {
+    color: #54a878;
+}
+
+.vehicle-spec-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    padding: 20px 0;
+    border-top: 1px solid #eee9e3;
+    border-bottom: 1px solid #eee9e3;
+}
+
+.vehicle-spec {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+}
+
+.vehicle-spec-icon {
+    width: 34px;
+    height: 34px;
+    display: grid;
+    flex-shrink: 0;
+    place-items: center;
+    color: #ef654e;
+    background: #fae9e1;
+    border-radius: 7px;
+}
+
+.vehicle-spec small,
+.vehicle-spec strong {
+    display: block;
+}
+
+.vehicle-spec small {
+    margin-bottom: 4px;
+    color: #9aa09e;
+    font-size: 10px;
+}
+
+.vehicle-spec strong {
+    overflow: hidden;
+    color: #273039;
+    font-size: 12px;
+    font-weight: 600;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.details-cta {
+    width: 100%;
+    justify-content: center;
+    margin-top: 25px;
+    border: 0;
+    font-size: 13px;
+}
+
+.details-cta:disabled {
+    cursor: not-allowed;
+    opacity: .55;
+}
+
+.details-lower-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    padding-top: 70px;
+}
+
+.details-copy-block h2 {
+    margin-bottom: 15px;
+    font-size: 28px;
+}
+
+.details-copy-block>p:last-child {
+    color: #69716f;
+    font-size: 13px;
+    line-height: 1.8;
+}
+
+.details-features {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 13px;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    color: #69716f;
+    font-size: 13px;
+}
+
+.details-features li {
+    display: flex;
+    align-items: start;
+    gap: 8px;
+}
+
+.details-features .anticon {
+    margin-top: 2px;
+    color: #ef654e;
+}
+
+.details-skeleton {
+    border-radius: 9px;
+    background: linear-gradient(90deg, #f0ece7 25%, #faf8f5 50%, #f0ece7 75%);
+    background-size: 200% 100%;
+    animation: details-loading 1.4s infinite;
+}
+
+.details-skeleton-image {
+    min-height: 430px;
+}
+
+.details-skeleton-content {
+    padding: 30px 8px;
+}
+
+.details-skeleton-line {
+    height: 16px;
+    margin-bottom: 18px;
+}
+
+.details-skeleton-line.short {
+    width: 25%;
+}
+
+.details-skeleton-line.title {
+    width: 75%;
+    height: 55px;
+}
+
+.details-skeleton-specs {
+    height: 130px;
+    margin-top: 35px;
+}
+
+@keyframes details-loading {
+    to { background-position: -200% 0; }
+}
+
+.details-message {
+    min-height: calc(100vh - 78px);
+    display: grid;
+    align-content: center;
+    justify-items: center;
+    padding-top: 30px;
+    padding-bottom: 80px;
+    text-align: center;
+}
+
+.details-message-icon {
+    width: 64px;
+    height: 64px;
+    display: grid;
+    place-items: center;
+    margin-bottom: 22px;
+    color: #ef654e;
+    background: #fae9e1;
+    border-radius: 50%;
+    font-size: 26px;
+}
+
+.details-message h1 {
+    margin-bottom: 12px;
+    font-size: 36px;
+}
+
+.details-message p {
+    max-width: 420px;
+    margin-bottom: 25px;
+    color: #69716f;
+    font-size: 13px;
+    line-height: 1.7;
+} */
 
 @media (max-width: 900px) {
     .site-nav {
@@ -813,6 +1125,14 @@ h2 em {
     .vehicle-grid {
         grid-template-columns: repeat(2, 1fr);
     }
+
+    /* .vehicle-details-card {
+        grid-template-columns: 1fr;
+    }
+
+    .details-info {
+        padding-right: 0;
+    } */
 }
 
 @media (max-width: 640px) {
@@ -937,6 +1257,40 @@ h2 em {
     .testimonial-grid {
         grid-template-columns: 1fr;
     }
+
+    /* .vehicle-details-shell {
+        padding-top: 24px;
+        padding-bottom: 65px;
+    }
+
+    .vehicle-details-card {
+        gap: 25px;
+        padding: 16px;
+    }
+
+    .details-image-wrap,
+    .details-image,
+    .details-skeleton-image {
+        min-height: 250px;
+    }
+
+    .details-heading-row h1 {
+        font-size: 35px;
+    }
+
+    .details-price {
+        margin-top: 25px;
+    }
+
+    .details-lower-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+        padding-top: 50px;
+    }
+
+    .details-features {
+        grid-template-columns: 1fr;
+    } */
 
     .why-content {
         gap: 35px;

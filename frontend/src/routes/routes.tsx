@@ -22,6 +22,10 @@ export const router = createBrowserRouter([
     ],
   },
   {
+    path: "/vehicles/:vehicleId",
+    element: <VehicleDetails />,
+  },
+  {
     path: "/admin",
     element: (
       <ProtectedRoute role="admin">

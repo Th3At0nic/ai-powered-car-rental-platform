@@ -1,5 +1,6 @@
 import { HeartOutlined, StarFilled } from "@ant-design/icons";
 import { Button } from "antd";
+import { Link } from "react-router-dom";
 import { TVehicle } from "../../types/vehicle";
 
 type TVehicleCardProps = {
@@ -63,13 +64,22 @@ const VehicleCard = ({ vehicle }: TVehicleCardProps) => {
             <span className="text-sm text-slate-500"> / day</span>
           </div>
 
-          <Button
-            type="primary"
-            disabled={!vehicle.isAvailable}
-            className="!h-9 !rounded-lg !border-0"
-          >
-            Rent Now
-          </Button>
+          {vehicle.isAvailable ? (
+            <Link
+              to={`/vehicles/${vehicle._id}`}
+              className="ant-btn ant-btn-primary h-9! rounded-lg! border-0!"
+            >
+              Rent Now
+            </Link>
+          ) : (
+            <Button
+              type="primary"
+              disabled
+              className="!h-9 !rounded-lg !border-0"
+            >
+              Unavailable
+            </Button>
+          )}
         </div>
       </div>
     </div>
