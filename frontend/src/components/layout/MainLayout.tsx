@@ -1,4 +1,5 @@
-import { Button, Layout, theme } from "antd";
+import { Avatar, Button, Input, Layout, Space, Tooltip, theme } from "antd";
+import { BellOutlined, LogoutOutlined, SearchOutlined, SettingOutlined } from "@ant-design/icons";
 import { Outlet, useLocation } from "react-router-dom";
 import Sidebar from "./Sidebar";
 import { useAppDispatch } from "../../redux/hooks";
@@ -31,19 +32,17 @@ const MainLayout = () => {
             alignItems: "center",
           }}
         >
-          {isAdmin && <div className="admin-header-title">Operations overview</div>}
-          <Button
-            onClick={handleLogout}
-            style={{
-              margin: "auto 15px auto auto",
-              backgroundColor: isAdmin ? "transparent" : "red",
-              color: isAdmin ? "#ef654e" : "white",
-              border: isAdmin ? "1px solid #ef654e" : "0",
-              fontWeight: "700",
-            }}
-          >
-            Logout
-          </Button>
+          {isAdmin ? (
+            <>
+              <Input className="admin-global-search" prefix={<SearchOutlined />} placeholder="Search dashboard" suffix={<kbd>⌘ K</kbd>} />
+              <Space className="admin-header-actions" size={6}>
+                <Tooltip title="Notifications"><Button type="text" aria-label="Notifications" icon={<BellOutlined />} /></Tooltip>
+                <Tooltip title="Settings"><Button type="text" aria-label="Settings" icon={<SettingOutlined />} /></Tooltip>
+                <Avatar size={30} className="admin-avatar">A</Avatar>
+                <Button className="admin-logout" onClick={handleLogout} icon={<LogoutOutlined />}>Logout</Button>
+              </Space>
+            </>
+          ) : <Button onClick={handleLogout}>Logout</Button>}
         </Header>
         <Content className={isAdmin ? "admin-content" : ""} style={{ margin: "24px 16px 0", minHeight: "100vh" }}>
           <div
@@ -58,6 +57,7 @@ const MainLayout = () => {
             <Outlet />
           </div>
         </Content>
+        {isAdmin && <footer className="admin-footer"><span>2026 © All Right Reserved</span><span>Designed &amp; Developed</span></footer>}
       </Layout>
     </Layout>
   );
