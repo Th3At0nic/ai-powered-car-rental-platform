@@ -44,31 +44,100 @@ const testimonials = [
 function SearchField({
   icon,
   label,
-  value,
+  children,
 }: {
   icon: ReactNode;
   label: string;
-  value: string;
+  children: ReactNode;
 }) {
   return (
     <label className="search-field">
       <span className="search-icon">{icon}</span>
       <span>
         <small>{label}</small>
-        <strong>{value}</strong>
+        {children}
       </span>
     </label>
   );
 }
 
+type SearchForm = {
+  pickupLocation: string;
+  pickupDate: string;
+  pickupTime: string;
+  dropoffLocation: string;
+  dropoffDate: string;
+};
+
 const CustomerHome = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [category, setCategory] = useState("Popular");
   const [showAll, setShowAll] = useState(false);
+  const [searchForm, setSearchForm] = useState<SearchForm>({
+    pickupLocation: "",
+    pickupDate: "",
+    pickupTime: "",
+    dropoffLocation: "",
+    dropoffDate: "",
+  });
+  const [submittedSearch, setSubmittedSearch] = useState<SearchForm | null>(
+    null
+  );
+  const [searchError, setSearchError] = useState("");
 
-  const { data, isLoading, isError } = useGetAllVehiclesQuery({ limit: 100 });
+  const { data, isLoading, isError } = useGetAllVehiclesQuery(
+    submittedSearch
+      ? {
+          location: submittedSearch.pickupLocation || undefined,
+          isAvailable: true,
+          limit: 100,
+        }
+      : { limit: 100 }
+  );
 
   const vehicles = data?.data?.data ?? [];
+  const today = new Date().toISOString().split("T")[0];
+
+  const updateSearchField = (field: keyof SearchForm, value: string) => {
+    setSearchForm((current) => ({ ...current, [field]: value }));
+    setSearchError("");
+  };
+
+  const handleSearch = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    if (searchForm.pickupDate && searchForm.pickupDate < today) {
+      setSearchError("Pick-up date cannot be in the past.");
+      return;
+    }
+
+    if (
+      searchForm.pickupDate &&
+      searchForm.dropoffDate &&
+      searchForm.dropoffDate < searchForm.pickupDate
+    ) {
+      setSearchError("Drop-off date cannot be before the pick-up date.");
+      return;
+    }
+
+    setSubmittedSearch(searchForm);
+    setShowAll(false);
+    setSearchError("");
+    document.getElementById("deals")?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  const handleResetSearch = () => {
+    setSearchForm({
+      pickupLocation: "",
+      pickupDate: "",
+      pickupTime: "",
+      dropoffLocation: "",
+      dropoffDate: "",
+    });
+    setSubmittedSearch(null);
+    setSearchError("");
+    setShowAll(false);
+  };
 
   const filtered = vehicles.filter((vehicle) => {
     if (category === "Popular") {
@@ -152,7 +221,7 @@ const CustomerHome = () => {
               Drive with ease<strong>Premium fleet</strong>
             </div>
           </div>
-          <div className="booking-panel">
+            <form className="booking-panel" onSubmit={handleSearch}>
             <div className="booking-heading">
               <strong>Plan your trip</strong>
               <small>Find your perfect ride</small>
@@ -160,33 +229,90 @@ const CustomerHome = () => {
             <SearchField
               icon={<EnvironmentOutlined />}
               label="Pick-up location"
-              value="Select your city"
-            />
+              >
+                <select
+                  value={searchForm.pickupLocation}
+                  onChange={(event) =>
+                    updateSearchField("pickupLocation", event.target.value)
+                  }
+                  aria-label="Pick-up location"
+                >
+                  <option value="">Select your city</option>
+                  <option value="Dhaka">Dhaka</option>
+                  <option value="Chattogram">Chattogram</option>
+                  <option value="Sylhet">Sylhet</option>
+                  <option value="Rajshahi">Rajshahi</option>
+                </select>
+              </SearchField>
             <SearchField
               icon={<CalendarOutlined />}
               label="Pick-up date"
-              value="Choose a date"
-            />
+              >
+                <input
+                  type="date"
+                  value={searchForm.pickupDate}
+                  min={today}
+                  onChange={(event) =>
+                    updateSearchField("pickupDate", event.target.value)
+                  }
+                  aria-label="Pick-up date"
+                />
+              </SearchField>
             <SearchField
               icon={<ClockCircleOutlined />}
               label="Pick-up time"
-              value="Select time"
-            />
+              >
+                <input
+                  type="time"
+                  value={searchForm.pickupTime}
+                  onChange={(event) =>
+                    updateSearchField("pickupTime", event.target.value)
+                  }
+                  aria-label="Pick-up time"
+                />
+              </SearchField>
             <span className="booking-divider" />
             <SearchField
               icon={<EnvironmentOutlined />}
               label="Drop-off location"
-              value="Select your city"
-            />
+              >
+                <select
+                  value={searchForm.dropoffLocation}
+                  onChange={(event) =>
+                    updateSearchField("dropoffLocation", event.target.value)
+                  }
+                  aria-label="Drop-off location"
+                >
+                  <option value="">Select your city</option>
+                  <option value="Dhaka">Dhaka</option>
+                  <option value="Chattogram">Chattogram</option>
+                  <option value="Sylhet">Sylhet</option>
+                  <option value="Rajshahi">Rajshahi</option>
+                </select>
+              </SearchField>
             <SearchField
               icon={<CalendarOutlined />}
               label="Drop-off date"
-              value="Choose a date"
-            />
-            <button className="search-button">
+              >
+                <input
+                  type="date"
+                  value={searchForm.dropoffDate}
+                  min={searchForm.pickupDate || today}
+                  onChange={(event) =>
+                    updateSearchField("dropoffDate", event.target.value)
+                  }
+                  aria-label="Drop-off date"
+                />
+              </SearchField>
+              <button className="search-button" type="submit">
               Search <SearchOutlined />
             </button>
-          </div>
+              {searchError && (
+                <p className="booking-error" role="alert">
+                  {searchError}
+                </p>
+              )}
+            </form>
         </section>
         <section className="section-shell process-section" id="how-it-works">
           <div className="section-intro">
@@ -267,11 +393,34 @@ const CustomerHome = () => {
               </div>
             ) : (
               <div className="vehicle-state">
-                No vehicles are available for this category yet.
+                <p>
+                  {submittedSearch
+                    ? "No vehicles found for your selected location."
+                    : "No vehicles are available for this category yet."}
+                </p>
+                {submittedSearch && (
+                  <button
+                    className="show-more"
+                    type="button"
+                    onClick={handleResetSearch}
+                  >
+                    Clear search
+                  </button>
+                )}
               </div>
+            )}
+            {submittedSearch && filtered.length > 0 && (
+              <button
+                className="show-more"
+                type="button"
+                onClick={handleResetSearch}
+              >
+                Clear search
+              </button>
             )}
             {filtered.length > 8 && (
               <button
+                type="button"
                 className="show-more"
                 onClick={() => setShowAll(!showAll)}
               >

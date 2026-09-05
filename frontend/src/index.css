@@ -281,7 +281,9 @@ h2 em {
 }
 
 .search-field small,
-.search-field strong {
+.search-field strong,
+.search-field input,
+.search-field select {
     display: block;
 }
 
@@ -295,6 +297,37 @@ h2 em {
     color: #273039;
     font-size: 11px;
     font-weight: 600;
+}
+
+.search-field input,
+.search-field select {
+    width: 100%;
+    min-width: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    color: #273039;
+    background: transparent;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.search-field select {
+    cursor: pointer;
+}
+
+.search-field input:focus,
+.search-field select:focus {
+    color: #ef654e;
+}
+
+.booking-error {
+    position: absolute;
+    left: 21px;
+    bottom: -27px;
+    margin: 0;
+    color: #c84c3a;
+    font-size: 11px;
 }
 
 .search-icon {
@@ -1205,7 +1238,9 @@ h2 em {
         border-right: 0;
     }
 
-    .search-field strong {
+    .search-field strong,
+    .search-field input,
+    .search-field select {
         font-size: 10px;
     }
 
