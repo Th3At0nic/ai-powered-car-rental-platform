@@ -1196,6 +1196,194 @@ h2 em {
     opacity: .55;
 }
 
+.booking-page {
+    min-height: 100vh;
+    background: #fbfaf7;
+}
+
+.booking-shell {
+    padding-top: 34px;
+    padding-bottom: 100px;
+}
+
+.booking-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+    align-items: start;
+}
+
+.booking-summary,
+.booking-form-card {
+    overflow: hidden;
+    background: white;
+    border: 1px solid #eee7df;
+    border-radius: 14px;
+    box-shadow: 0 15px 40px #17202a0b;
+}
+
+.booking-summary-image {
+    width: 100%;
+    height: 270px;
+    display: block;
+    object-fit: cover;
+}
+
+.booking-summary-content {
+    padding: 27px 30px 30px;
+}
+
+.booking-summary-content h1 {
+    margin-bottom: 8px;
+    font-size: clamp(34px, 4vw, 48px);
+}
+
+.booking-summary-brand,
+.booking-form-intro {
+    color: #69716f;
+    font-size: 13px;
+}
+
+.booking-summary-price {
+    display: flex;
+    align-items: baseline;
+    gap: 5px;
+    margin: 25px 0 12px;
+}
+
+.booking-summary-price strong {
+    font: 700 29px 'Space Grotesk';
+}
+
+.booking-summary-price span {
+    color: #7f8784;
+    font-size: 12px;
+}
+
+.booking-summary-status {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    margin-bottom: 22px;
+    color: #37805b;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.booking-summary-specs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px 12px;
+    padding-top: 20px;
+    border-top: 1px solid #eee9e3;
+}
+
+.booking-spec {
+    display: grid;
+    grid-template-columns: 30px 1fr;
+    column-gap: 9px;
+    align-items: center;
+}
+
+.booking-spec > span {
+    grid-row: span 2;
+    width: 30px;
+    height: 30px;
+    display: grid;
+    place-items: center;
+    color: #ef654e;
+    background: #fae9e1;
+    border-radius: 7px;
+}
+
+.booking-spec small {
+    color: #9aa09e;
+    font-size: 10px;
+}
+
+.booking-spec strong {
+    overflow: hidden;
+    color: #273039;
+    font-size: 12px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.booking-form-card {
+    padding: 32px;
+}
+
+.booking-form-card h2 {
+    margin-bottom: 10px;
+    font-size: 30px;
+}
+
+.booking-form-intro {
+    margin-bottom: 25px;
+    line-height: 1.6;
+}
+
+.booking-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 19px 15px;
+}
+
+.booking-form label {
+    display: grid;
+    gap: 8px;
+    color: #273039;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.booking-form input {
+    width: 100%;
+    min-height: 46px;
+    padding: 0 13px;
+    color: #17202a;
+    background: #fbfaf7;
+    border: 1px solid #e5ded6;
+    border-radius: 7px;
+    font: 400 13px 'DM Sans';
+    outline: none;
+}
+
+.booking-form input:focus {
+    border-color: #ef654e;
+    box-shadow: 0 0 0 3px #ef654e1f;
+}
+
+.booking-estimate {
+    grid-column: 1 / -1;
+    display: grid;
+    gap: 6px;
+    padding: 17px;
+    color: #69716f;
+    background: #f5eee5;
+    border-radius: 8px;
+    font-size: 12px;
+}
+
+.booking-estimate strong {
+    color: #17202a;
+    font: 700 18px 'Space Grotesk';
+}
+
+.booking-submit {
+    grid-column: 1 / -1;
+    justify-content: center;
+    width: 100%;
+    margin-top: 4px;
+    border: 0;
+    font-size: 13px;
+}
+
+.booking-submit:disabled {
+    cursor: not-allowed;
+    opacity: .6;
+}
+
 .details-lower-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -1346,6 +1534,10 @@ h2 em {
         grid-template-columns: 1fr;
     }
 
+    .booking-layout {
+        grid-template-columns: 1fr;
+    }
+
     .details-info {
         padding-right: 0;
     }
@@ -1484,6 +1676,24 @@ h2 em {
     .vehicle-details-card {
         gap: 25px;
         padding: 16px;
+    }
+
+    .booking-shell {
+        padding-top: 24px;
+        padding-bottom: 65px;
+    }
+
+    .booking-summary-content,
+    .booking-form-card {
+        padding: 22px;
+    }
+
+    .booking-summary-image {
+        height: 220px;
+    }
+
+    .booking-form {
+        grid-template-columns: 1fr;
     }
 
     .details-image-wrap,

@@ -1,5 +1,9 @@
 import { baseApi } from "../../api/baseApi";
-import type { TRentalListResponse } from "../../../types/rental";
+import type {
+  TCreateRentalRequest,
+  TRentalListResponse,
+  TRentalResponse,
+} from "../../../types/rental";
 
 const rentalApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -8,8 +12,17 @@ const rentalApi = baseApi.injectEndpoints({
         url: "/rentals/my-rentals",
         method: "GET",
       }),
+      providesTags: ["Rentals"],
+    }),
+    createRental: builder.mutation<TRentalResponse, TCreateRentalRequest>({
+      query: (body) => ({
+        url: "/rentals",
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: ["Rentals"],
     }),
   }),
 });
 
-export const { useGetMyRentalsQuery } = rentalApi;
+export const { useGetMyRentalsQuery, useCreateRentalMutation } = rentalApi;

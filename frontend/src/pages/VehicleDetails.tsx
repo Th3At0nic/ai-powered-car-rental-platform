@@ -126,13 +126,15 @@ const VehicleDetails = () => {
               />
             </div>
 
-            <button
-              type="button"
-              className="details-cta primary-button"
-              disabled={!vehicle.isAvailable}
-            >
-              {vehicle.isAvailable ? "Rent This Car" : "Currently Unavailable"}
-            </button>
+            {vehicle.isAvailable ? (
+              <Link to={`/vehicles/${vehicle._id}/rent`} className="details-cta primary-button">
+                Rent This Car
+              </Link>
+            ) : (
+              <button type="button" className="details-cta primary-button" disabled>
+                Currently Unavailable
+              </button>
+            )}
           </div>
         </section>
 
@@ -163,7 +165,7 @@ const VehicleDetails = () => {
   );
 };
 
-function CustomerHeader({
+export function CustomerHeader({
   menuOpen,
   setMenuOpen,
 }: {

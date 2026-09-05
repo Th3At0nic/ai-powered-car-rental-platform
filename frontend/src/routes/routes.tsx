@@ -11,6 +11,7 @@ import { userPaths } from "./userRoutes";
 import CustomerHome from "../pages/CustomerHome";
 import VehicleDetails from "../pages/VehicleDetails";
 import MyRentals from "../pages/MyRentals";
+import Booking from "../pages/Booking";
 
 export const router = createBrowserRouter([
   {
@@ -26,6 +27,14 @@ export const router = createBrowserRouter([
   {
     path: "/vehicles/:vehicleId",
     element: <VehicleDetails />,
+  },
+  {
+    path: "/vehicles/:vehicleId/rent",
+    element: (
+      <ProtectedRoute role="user">
+        <Booking />
+      </ProtectedRoute>
+    ),
   },
   {
     path: "/my-rentals",

@@ -26,3 +26,17 @@ export type TRentalListResponse = {
   message: string;
   data: TRental[];
 };
+
+export type TCreateRentalRequest = {
+  vehicle: string;
+  pickupLocation: string;
+  dropoffLocation: string;
+  pickupDate: string;
+  dropoffDate: string;
+};
+
+export type TRentalResponse = {
+  success: boolean;
+  message: string;
+  data: TRental;
+};
