@@ -1,4 +1,7 @@
 import { Layout, Menu } from "antd";
+import type { MenuProps } from "antd";
+import { BarChartOutlined, CarOutlined, DashboardOutlined, EnvironmentOutlined, FolderOpenOutlined, HomeOutlined, SettingOutlined, TagsOutlined, TeamOutlined, UnorderedListOutlined } from "@ant-design/icons";
+import { NavLink, useLocation } from "react-router-dom";
 import { useAppSelector } from "../../redux/hooks";
 import {
   TUserFromToken,
@@ -6,7 +9,6 @@ import {
 } from "../../redux/features/auth/authSlice";
 import { verifyToken } from "../../utils/verifyToken";
 import { sidebarItemsGenerator } from "../../utils/sidebarItemsGenerator";
-import { adminPaths } from "../../routes/adminRoutes";
 import { userPaths } from "../../routes/userRoutes";
 
 const { Sider } = Layout;
@@ -18,6 +20,7 @@ const userRole = {
 
 export const Sidebar = () => {
   const token = useAppSelector(userCurrentToken);
+  const location = useLocation();
 
   let user = null;
 
@@ -27,11 +30,19 @@ export const Sidebar = () => {
 
   // Using `user!` to assert that `user` is never null or undefined at this point.
   // This should only be used when we're 100% sure `user` exists to avoid runtime errors.
-  let sidebarItems;
+  let sidebarItems: MenuProps["items"];
 
   switch (user?.role) {
     case userRole.ADMIN:
-      sidebarItems = sidebarItemsGenerator(adminPaths, userRole.ADMIN);
+      sidebarItems = [
+        { type: "group", label: "MAIN", children: [{ key: "/admin/dashboard", icon: <DashboardOutlined />, label: <NavLink to="/admin/dashboard">Dashboard</NavLink> }, { key: "super-admin", icon: <TeamOutlined />, label: "Super Admin", disabled: true }] },
+        { type: "divider" },
+        { type: "group", label: "FLEET", children: [{ key: "vehicles", icon: <CarOutlined />, label: "Vehicles", disabled: true }, { key: "categories", icon: <TagsOutlined />, label: "Categories", disabled: true }, { key: "brands", icon: <FolderOpenOutlined />, label: "Brands", disabled: true }, { key: "locations", icon: <EnvironmentOutlined />, label: "Locations", disabled: true }] },
+        { type: "divider" },
+        { type: "group", label: "RENTALS", children: [{ key: "rentals", icon: <UnorderedListOutlined />, label: "Rentals", disabled: true }, { key: "pending-rentals", icon: <HomeOutlined />, label: "Pending rentals", disabled: true }] },
+        { type: "divider" },
+        { type: "group", label: "REPORTS", children: [{ key: "analytics", icon: <BarChartOutlined />, label: "Analytics", disabled: true }, { key: "settings", icon: <SettingOutlined />, label: "Settings", disabled: true }] },
+      ];
       break;
     case userRole.USER:
       sidebarItems = sidebarItemsGenerator(userPaths, userRole.USER);
@@ -54,10 +65,10 @@ export const Sidebar = () => {
           color: "white",
           textAlign: "center",
           fontSize: "0.8rem",
-          margin: "18px auto 18px",
+          margin: "22px auto 28px",
         }}
       >
-        <h1>CarNexa</h1>
+        <h1><span className="admin-brand-mark">D</span> DrivePilot</h1>
       </div>
 
       {/* Sidebar Menu - Takes Remaining Space */}
@@ -65,7 +76,7 @@ export const Sidebar = () => {
       <Menu
         theme="dark"
         mode="inline"
-        defaultSelectedKeys={["4"]}
+        selectedKeys={[location.pathname]}
         items={sidebarItems}
       />
     </Sider>
