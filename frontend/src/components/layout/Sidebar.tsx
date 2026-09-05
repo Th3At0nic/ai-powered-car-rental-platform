@@ -57,7 +57,7 @@ export const Sidebar = () => {
           margin: "18px auto 18px",
         }}
       >
-        <h1>CarNexa</h1>
+        <h1>DrivePilot</h1>
       </div>
 
       {/* Sidebar Menu - Takes Remaining Space */}

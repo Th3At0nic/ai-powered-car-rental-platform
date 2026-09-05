@@ -7,6 +7,13 @@ import type {
 
 const rentalApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
+    getAllRentals: builder.query<TRentalListResponse, void>({
+      query: () => ({
+        url: "/rentals",
+        method: "GET",
+      }),
+      providesTags: ["Rentals"],
+    }),
     getMyRentals: builder.query<TRentalListResponse, void>({
       query: () => ({
         url: "/rentals/my-rentals",
@@ -25,4 +32,8 @@ const rentalApi = baseApi.injectEndpoints({
   }),
 });
 
-export const { useGetMyRentalsQuery, useCreateRentalMutation } = rentalApi;
+export const {
+  useGetAllRentalsQuery,
+  useGetMyRentalsQuery,
+  useCreateRentalMutation,
+} = rentalApi;
