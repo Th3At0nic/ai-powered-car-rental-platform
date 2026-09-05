@@ -12,37 +12,42 @@ import CustomerHome from "../pages/CustomerHome";
 import VehicleDetails from "../pages/VehicleDetails";
 import MyRentals from "../pages/MyRentals";
 import Booking from "../pages/Booking";
+import CustomerLayout from "../components/layout/CustomerLayout";
 
 export const router = createBrowserRouter([
   {
     path: "/",
-    element: <CustomerHome />,
+    element: <CustomerLayout />,
     children: [
+      {
+        index: true,
+        element: <CustomerHome />,
+      },
       {
         path: "about",
         element: <About />,
       },
+      {
+        path: "vehicles/:vehicleId",
+        element: <VehicleDetails />,
+      },
+      {
+        path: "vehicles/:vehicleId/rent",
+        element: (
+          <ProtectedRoute role="user">
+            <Booking />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "my-rentals",
+        element: (
+          <ProtectedRoute role="user">
+            <MyRentals />
+          </ProtectedRoute>
+        ),
+      },
     ],
-  },
-  {
-    path: "/vehicles/:vehicleId",
-    element: <VehicleDetails />,
-  },
-  {
-    path: "/vehicles/:vehicleId/rent",
-    element: (
-      <ProtectedRoute role="user">
-        <Booking />
-      </ProtectedRoute>
-    ),
-  },
-  {
-    path: "/my-rentals",
-    element: (
-      <ProtectedRoute role="user">
-        <MyRentals />
-      </ProtectedRoute>
-    ),
   },
   {
     path: "/admin",

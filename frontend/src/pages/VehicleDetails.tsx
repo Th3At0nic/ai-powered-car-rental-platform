@@ -3,19 +3,17 @@ import {
   CarOutlined,
   CheckCircleFilled,
   EnvironmentOutlined,
-  MenuOutlined,
   SettingOutlined,
   StarFilled,
   ThunderboltOutlined,
   UserOutlined,
 } from "@ant-design/icons";
-import { useState, type ReactNode } from "react";
+import { type ReactNode } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useGetSingleVehicleQuery } from "../redux/features/vehicle/vehicleApi";
 
 const VehicleDetails = () => {
   const { vehicleId } = useParams<{ vehicleId: string }>();
-  const [menuOpen, setMenuOpen] = useState(false);
   const { data, isLoading, isError } = useGetSingleVehicleQuery(
     vehicleId ?? "",
     { skip: !vehicleId },
@@ -26,7 +24,6 @@ const VehicleDetails = () => {
   if (isLoading) {
     return (
       <div className="vehicle-details-page">
-        <CustomerHeader menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
         <main className="vehicle-details-shell section-shell">
           <div className="details-skeleton details-skeleton-image" />
           <div className="details-skeleton-content">
@@ -60,7 +57,6 @@ const VehicleDetails = () => {
 
   return (
     <div className="vehicle-details-page">
-      <CustomerHeader menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
       <main className="vehicle-details-shell section-shell">
         <Link to="/" className="details-back-link">
           <ArrowLeftOutlined /> Back to rental deals
@@ -165,42 +161,6 @@ const VehicleDetails = () => {
   );
 };
 
-export function CustomerHeader({
-  menuOpen,
-  setMenuOpen,
-}: {
-  menuOpen: boolean;
-  setMenuOpen: (open: boolean) => void;
-}) {
-  return (
-    <header className="site-header">
-      <Link to="/" className="brand">
-        <span className="brand-mark">
-          <CarOutlined />
-        </span>
-        Drive<span>Pilot</span>
-      </Link>
-      <button
-        className="menu-toggle"
-        onClick={() => setMenuOpen(!menuOpen)}
-        aria-label="Toggle navigation"
-      >
-        <MenuOutlined />
-      </button>
-      <nav className={menuOpen ? "site-nav is-open" : "site-nav"}>
-        <Link to="/#home">Home</Link>
-        <Link to="/#how-it-works">How It Works</Link>
-        <Link to="/#deals">Rental Deals</Link>
-        <Link to="/#why-us">Why Choose Us</Link>
-        <Link to="/register">Register</Link>
-        <Link to="/login" className="login-button">
-          <UserOutlined /> Login
-        </Link>
-      </nav>
-    </header>
-  );
-}
-
 function VehicleSpec({
   icon,
   label,
@@ -230,7 +190,6 @@ function VehicleDetailsMessage({
 }) {
   return (
     <div className="vehicle-details-page">
-      <CustomerHeader menuOpen={false} setMenuOpen={() => undefined} />
       <main className="details-message section-shell">
         <div className="details-message-icon">
           <CarOutlined />

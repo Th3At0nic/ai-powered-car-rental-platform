@@ -10,7 +10,6 @@ import {
 import { useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { toast } from "sonner";
-import { CustomerHeader } from "./VehicleDetails";
 import { useCreateRentalMutation } from "../redux/features/rental/rentalApi";
 import { useGetSingleVehicleQuery } from "../redux/features/vehicle/vehicleApi";
 
@@ -68,7 +67,6 @@ const getErrorMessage = (error: unknown) => {
 const Booking = () => {
   const { vehicleId } = useParams<{ vehicleId: string }>();
   const navigate = useNavigate();
-  const [menuOpen, setMenuOpen] = useState(false);
   const [form, setForm] = useState<BookingForm>({
     pickupLocation: "",
     dropoffLocation: "",
@@ -116,7 +114,6 @@ const Booking = () => {
 
   return (
     <div className="booking-page">
-      <CustomerHeader menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
       <main className="booking-shell section-shell">
         <Link to={`/vehicles/${vehicle._id}`} className="details-back-link">
           <ArrowLeftOutlined /> Back to vehicle details
@@ -176,7 +173,7 @@ function BookingSpec({ icon, label, value }: { icon: React.ReactNode; label: str
 }
 
 function BookingMessage({ title, description }: { title: string; description: string }) {
-  return <div className="booking-page"><CustomerHeader menuOpen={false} setMenuOpen={() => undefined} /><main className="details-message section-shell"><div className="details-message-icon"><CarOutlined /></div><h1>{title}</h1><p>{description}</p><Link to="/" className="primary-button"><ArrowLeftOutlined /> Back to homepage</Link></main></div>;
+  return <div className="booking-page"><main className="details-message section-shell"><div className="details-message-icon"><CarOutlined /></div><h1>{title}</h1><p>{description}</p><Link to="/" className="primary-button"><ArrowLeftOutlined /> Back to homepage</Link></main></div>;
 }
 
 export default Booking;

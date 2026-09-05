@@ -1,5 +1,6 @@
 import { CarOutlined, EnvironmentOutlined } from "@ant-design/icons";
 import { Alert, Empty, Spin, Tag } from "antd";
+import { Link } from "react-router-dom";
 import { useGetMyRentalsQuery } from "../redux/features/rental/rentalApi";
 
 const statusColors = {
@@ -26,6 +27,10 @@ const MyRentals = () => {
         <p className="eyebrow">YOUR DRIVEPILOT ACCOUNT</p>
         <h1>My rentals</h1>
         <p>Keep track of your upcoming drives and rental history.</p>
+        <div className="rental-actions">
+          <Link to="/my-rentals" className="outline-button">Back to My Rentals</Link>
+          <Link to="/#deals" className="primary-button">Browse Cars</Link>
+        </div>
       </section>
 
       {isLoading && (
