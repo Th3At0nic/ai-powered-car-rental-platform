@@ -28,7 +28,6 @@ const MyRentals = () => {
         <h1>My rentals</h1>
         <p>Keep track of your upcoming drives and rental history.</p>
         <div className="rental-actions">
-          <Link to="/my-rentals" className="outline-button">Back to My Rentals</Link>
           <Link to="/#deals" className="primary-button">Browse Cars</Link>
         </div>
       </section>

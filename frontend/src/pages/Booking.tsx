@@ -128,7 +128,7 @@ const Booking = () => {
               <p className="eyebrow">YOUR SELECTED RIDE</p>
               <h1>{vehicle.name}</h1>
               <p className="booking-summary-brand">{vehicle.brand} · {vehicle.category}</p>
-              <div className="booking-summary-price"><strong>৳{vehicle.pricePerDay.toLocaleString()}</strong><span>/ day</span></div>
+              <div className="booking-summary-price"><strong>${vehicle.pricePerDay.toLocaleString()}</strong><span>/ day</span></div>
               <div className="booking-summary-status">
                 <CheckCircleFilled /> {vehicle.isAvailable ? "Available for booking" : "Currently unavailable"}
               </div>
@@ -153,8 +153,8 @@ const Booking = () => {
 
               {rentalDays > 0 && (
                 <div className="booking-estimate">
-                  <span>{rentalDays} days × ৳{vehicle.pricePerDay.toLocaleString()}/day</span>
-                  <strong>Estimated total: ৳{(rentalDays * vehicle.pricePerDay).toLocaleString()}</strong>
+                  <span>{rentalDays} days × ${vehicle.pricePerDay.toLocaleString()}/day</span>
+                  <strong>Estimated total: ${(rentalDays * vehicle.pricePerDay).toLocaleString()}</strong>
                 </div>
               )}
               <button className="primary-button booking-submit" type="submit" disabled={isSubmitting || !vehicle.isAvailable}>
