@@ -18,6 +18,8 @@ import { useState, type ReactNode } from "react";
 import { Link } from "react-router-dom";
 import VehicleCard from "../components/customer/VehicleCard";
 import { useGetAllVehiclesQuery } from "../redux/features/vehicle/vehicleApi";
+import { useAppDispatch, useAppSelector } from "../redux/hooks";
+import { currentUser, logoutUser } from "../redux/features/auth/authSlice";
 
 const categories = ["Popular", "Large Car", "Small Car", "Exclusive Car"];
 const testimonials = [
@@ -70,6 +72,8 @@ type SearchForm = {
 };
 
 const CustomerHome = () => {
+  const dispatch = useAppDispatch();
+  const user = useAppSelector(currentUser);
   const [menuOpen, setMenuOpen] = useState(false);
   const [category, setCategory] = useState("Popular");
   const [showAll, setShowAll] = useState(false);
@@ -183,10 +187,21 @@ const CustomerHome = () => {
           <a href="#deals">Rental Deals</a>
           <a href="#why-us">Why Choose Us</a>
           <a href="#testimonials">Testimonial</a>
-          <Link to="/register">Register</Link>
-          <Link to="/login" className="login-button">
-            <UserOutlined /> Login
-          </Link>
+          {user?.role === "user" ? (
+            <>
+              <Link to="/my-rentals">My Rentals</Link>
+              <button className="nav-logout" onClick={() => dispatch(logoutUser())}>
+                Logout
+              </button>
+            </>
+          ) : (
+            <>
+              <Link to="/register">Register</Link>
+              <Link to="/login" className="login-button">
+                <UserOutlined /> Login
+              </Link>
+            </>
+          )}
         </nav>
       </header>
       <main>

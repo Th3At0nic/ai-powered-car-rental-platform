@@ -10,6 +10,7 @@ import { adminPaths } from "./adminRoutes";
 import { userPaths } from "./userRoutes";
 import CustomerHome from "../pages/CustomerHome";
 import VehicleDetails from "../pages/VehicleDetails";
+import MyRentals from "../pages/MyRentals";
 
 export const router = createBrowserRouter([
   {
@@ -25,6 +26,14 @@ export const router = createBrowserRouter([
   {
     path: "/vehicles/:vehicleId",
     element: <VehicleDetails />,
+  },
+  {
+    path: "/my-rentals",
+    element: (
+      <ProtectedRoute role="user">
+        <MyRentals />
+      </ProtectedRoute>
+    ),
   },
   {
     path: "/admin",

@@ -1,125 +1,70 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { Button, Row, Typography } from "antd";
-import { FieldValues } from "react-hook-form";
+import { Button, Form, Input, Row, Typography } from "antd";
 import { useLoginMutation } from "../redux/features/auth/authApi";
-import { useDispatch } from "react-redux";
-import { setUser, TUserFromToken } from "../redux/features/auth/authSlice";
-import { useNavigate } from "react-router-dom";
+import { useAppDispatch } from "../redux/hooks";
+import { setUser } from "../redux/features/auth/authSlice";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
-import PHForm from "../components/form/PHForm";
-import PHInput from "../components/form/PHInput";
 import { useState } from "react";
-import { verifyToken } from "../utils/verifyToken";
+
+type TLoginForm = { email: string; password: string };
+
+const getErrorMessage = (error: unknown) => {
+  if (typeof error === "object" && error !== null && "data" in error) {
+    const data = (error as { data?: { message?: string } }).data;
+    if (data?.message) return data.message;
+  }
+  return "Unable to log in. Please check your details and try again.";
+};
 
 const Login = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
+  const location = useLocation();
   const { Title } = Typography;
 
   const [login] = useLoginMutation();
 
-  const onSubmit = async (formData: FieldValues) => {
+  const onSubmit = async (formData: TLoginForm) => {
     const toastId = toast.loading("Logging in...");
     try {
-      const userInfo = {
-        email: formData.email,
-        password: formData.password,
-      };
-      const res = await login(userInfo).unwrap();
-
-      const user = verifyToken(res.data.accessToken) as TUserFromToken;
-
-      dispatch(setUser({ user: user, token: res.data.accessToken }));
+      const res = await login(formData).unwrap();
+      dispatch(setUser({
+        user: res.data.user,
+        token: res.data.accessToken,
+        refreshToken: res.data.refreshToken,
+      }));
 
       toast.success("Logged in successfully", { id: toastId, duration: 2000 });
 
-      navigate(`/${user.role}/dashboard`);
+      const destination = (location.state as { from?: { pathname?: string } } | null)?.from?.pathname;
+      navigate(destination || (res.data.user.role === "admin" ? "/admin/dashboard" : "/"));
     } catch (err) {
-      toast.error(`Something went wrong`, {
+      toast.error(getErrorMessage(err), {
         id: toastId,
         duration: 2000,
       });
     }
   };
 
-  // State to toggle password visibility
   const [showPassword, setShowPassword] = useState(false);
 
-  // Toggle the password visibility
-  const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
-  };
-
   return (
-    <Row
-      justify="center"
-      align="middle"
-      style={{
-        height: "100vh",
-        backgroundColor: "#f0f2f5", // Light background to make the form stand out
-        padding: "20px", // Adds padding around the content
-      }}
-    >
-      <div
-        style={{
-          maxWidth: "400px",
-          width: "100%",
-          backgroundColor: "#fff", // White background for the form container
-          padding: "30px",
-          borderRadius: "8px", // Rounded corners
-          boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)", // Soft shadow for a modern look
-        }}
-      >
-        <Title level={2} style={{ textAlign: "center", marginBottom: "20px" }}>
-          Login to Your Account
-        </Title>
-
-        <PHForm onSubmit={onSubmit}>
-          {/* ID Field */}
-          <div style={{ marginBottom: "16px" }}>
-            <PHInput type="text" name="email" label="Email" />
-          </div>
-
-          {/* Password Field */}
-          <div style={{ marginBottom: "16px" }}>
-            <PHInput
-              type={showPassword ? "text" : "password"}
-              name="password"
-              label="Password"
-            />
-            {/* Show Password Button */}
-            <Button
-              type="link"
-              onClick={togglePasswordVisibility}
-              style={{
-                marginTop: "8px",
-                padding: "0",
-                fontSize: "14px",
-                color: "#1890ff", // Blue color to match Ant Design's link style
-                textAlign: "right",
-                display: "block", // To ensure it's below the input
-                width: "100%",
-              }}
-            >
-              {showPassword ? "Hide Password" : "Show Password"}
-            </Button>
-          </div>
-
-          <Button
-            type="primary"
-            htmlType="submit"
-            block
-            style={{
-              marginTop: "20px",
-              backgroundColor: "#1890ff", // Primary button color (blue)
-              borderColor: "#1890ff", // Border color to match button
-              fontSize: "16px", // Slightly larger text
-              padding: "10px", // Adds padding inside the button
-            }}
-          >
-            Login
-          </Button>
-        </PHForm>
+    <Row justify="center" align="middle" className="auth-page">
+      <div className="auth-card">
+        <Link to="/" className="auth-brand">Drive<span>Pilot</span></Link>
+        <p className="eyebrow">WELCOME BACK</p>
+        <Title level={2}>Log in to your account</Title>
+        <p className="auth-intro">Pick up where your next journey begins.</p>
+        <Form layout="vertical" onFinish={onSubmit}>
+          <Form.Item label="Email" name="email" rules={[{ required: true, type: "email", message: "Enter a valid email." }]}>
+            <Input size="large" autoComplete="email" />
+          </Form.Item>
+          <Form.Item label="Password" name="password" rules={[{ required: true, message: "Enter your password." }]}>
+            <Input.Password size="large" visibilityToggle={{ visible: showPassword, onVisibleChange: setShowPassword }} autoComplete="current-password" />
+          </Form.Item>
+          <Button type="primary" htmlType="submit" block size="large">Log in</Button>
+        </Form>
+        <p className="auth-footer">New to DrivePilot? <Link to="/register">Create an account</Link></p>
       </div>
     </Row>
   );
