@@ -65,11 +65,13 @@ const VehicleCard = ({ vehicle }: TVehicleCardProps) => {
           </div>
 
           {vehicle.isAvailable ? (
-            <Link
-              to={`/vehicles/${vehicle._id}`}
-              className="ant-btn ant-btn-primary h-9! rounded-lg! border-0!"
-            >
-              Rent Now
+            <Link to={`/vehicles/${vehicle._id}`}>
+              <Button
+                type="primary"
+                className="ant-btn ant-btn-primary h-9! rounded-lg! border-0!"
+              >
+                Rent Now
+              </Button>
             </Link>
           ) : (
             <Button
