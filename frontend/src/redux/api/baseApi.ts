@@ -11,7 +11,7 @@ import { toast } from "sonner";
 
 const baseQuery = fetchBaseQuery({
   // baseUrl: "http://localhost:5001/api/v1",
-  baseUrl: "drive-pilot-backend.vercel.app/api/v1",
+  baseUrl: "https://drive-pilot-server.vercel.app/api/v1",
   credentials: "include",
   prepareHeaders: (headers, { getState }) => {
     const token = (getState() as RootState).auth.token;
@@ -42,7 +42,8 @@ const baseQueryWithRefreshToken: BaseQueryFn<
   if (result?.error?.status === 401) {
     // Request a new token
     const refreshResult = await fetch(
-      "http://localhost:5001/api/v1/auth/refresh-token",
+      // "http://localhost:5001/api/v1/auth/refresh-token",
+      "https://drive-pilot-server.vercel.app/api/v1/auth/refresh-token",
       {
         method: "POST",
         credentials: "include",
