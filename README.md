@@ -8,20 +8,20 @@ The platform provides a customer-facing car rental experience, a protected admin
 
 ## Live Demo
 
-**Customer Frontend:**  
+**Customer Frontend:**
 [Add deployed frontend URL]
 
-**Admin Dashboard:**  
+**Admin Dashboard:**
 [Add deployed frontend URL]/admin
 
-**Backend API:**  
+**Backend API:**
 [Add deployed backend API URL]
 
 ---
 
 ## Repository
 
-**GitHub:**  
+**GitHub:**
 https://github.com/Th3At0nic/ai-powered-car-rental-platform
 
 ---
@@ -62,11 +62,7 @@ Customers can describe their requirements in natural language, for example:
 
 > "I need a comfortable hybrid SUV for a family of 5. I want something reasonably priced."
 
-The backend sends the customer's preferences and the currently available vehicle inventory to Gemini.
-
-The AI recommends the best matching vehicle.
-
-The returned vehicle ID is then validated against the actual MongoDB vehicle inventory before the recommendation is displayed.
+The backend sends the customer's preferences and the currently available vehicle inventory to Gemini. The AI recommends the best matching vehicle, and the returned vehicle ID is validated against the actual MongoDB vehicle inventory before the recommendation is displayed.
 
 The customer receives:
 
@@ -84,7 +80,7 @@ DrivePilot uses n8n for rental notification automation.
 
 When a rental is successfully created:
 
-```text
+```
 Customer creates rental
         ↓
 DrivePilot backend
@@ -98,182 +94,197 @@ Telegram notification
 
 The automated Telegram notification contains complete reservation details, including:
 
-Customer Name & Email
-
-Vehicle details (Brand, Name, Category, Fuel Type, Transmission)
-
-Pickup & Drop-off Locations
-
-Pickup & Drop-off Dates
-
-Rental Duration & Daily Pricing
-
-Total Amount
-
-Rental Status & Rental ID
+- Customer Name & Email
+- Vehicle details (Brand, Name, Category, Fuel Type, Transmission)
+- Pickup & Drop-off Locations
+- Pickup & Drop-off Dates
+- Rental Duration & Daily Pricing
+- Total Amount
+- Rental Status & Rental ID
 
 The automation is decoupled as a secondary non-blocking process so that temporary webhook failures never impact database transactions or booking confirmation.
 
-Technology Stack
-Frontend: React, TypeScript, Vite, Tailwind CSS, Redux Toolkit, RTK Query, Ant Design
+---
 
-Backend: Node.js, Express.js, TypeScript, MongoDB, Mongoose, Zod, JWT Authentication, bcrypt
+## Technology Stack
 
-AI: Google Gemini API (gemini-3.6-flash)
+| Layer          | Technologies                                                                        |
+| -------------- | ----------------------------------------------------------------------------------- |
+| **Frontend**   | React, TypeScript, Vite, Tailwind CSS, Redux Toolkit, RTK Query, Ant Design         |
+| **Backend**    | Node.js, Express.js, TypeScript, MongoDB, Mongoose, Zod, JWT Authentication, bcrypt |
+| **AI**         | Google Gemini API (gemini-3.6-flash)                                                |
+| **Automation** | n8n Community Edition, Telegram Bot API                                             |
 
-Automation: n8n Community Edition, Telegram Bot API
+---
 
-System Architecture
-Plaintext
-┌─────────────────────┐
-│ MongoDB │
-│ Atlas │
-└──────────┬──────────┘
-│
-│
-┌─────────────────┐ ┌────────▼────────┐
-│ │ │ │
-│ React Frontend │──────▶│ Express Backend │
-│ │ │ │
-└─────────────────┘ └───────┬─────────┘
-│
-┌─────────────┴──────────────┐
-│ │
-▼ ▼
-┌─────────────┐ ┌─────────────┐
-│ Gemini API │ │ n8n │
-│ AI Vehicle │ │ Automation │
-│ Recommend. │ └──────┬──────┘
-└─────────────┘ │
-▼
-┌─────────────┐
-│ Telegram │
-│ Notification│
-└─────────────┘
-Backend API Architecture
-Base URL: /api/v1
+## System Architecture
 
-Main Endpoints
-Authentication:
+```
+                 ┌─────────────────────┐
+                 │     MongoDB Atlas    │
+                 └──────────┬──────────┘
+                            │
+┌─────────────────┐   ┌─────▼───────────┐
+│  React Frontend │──▶│ Express Backend │
+└─────────────────┘   └───────┬─────────┘
+                               │
+                ┌──────────────┴──────────────┐
+                │                              │
+         ┌──────▼──────┐               ┌───────▼──────┐
+         │ Gemini API  │               │      n8n     │
+         │ AI Vehicle  │               │  Automation  │
+         │ Recommend.  │               └───────┬──────┘
+         └─────────────┘                       │
+                                        ┌───────▼──────┐
+                                        │   Telegram   │
+                                        │ Notification │
+                                        └──────────────┘
+```
 
-POST /auth/register
+---
 
-POST /auth/login
+## Backend API Architecture
 
-Vehicles:
+**Base URL:** `/api/v1`
 
-GET /vehicles (Supports filtering, searching, sorting, and pagination)
+### Main Endpoints
 
-GET /vehicles/:id
+**Authentication:**
 
-Rentals:
+- `POST /auth/register`
+- `POST /auth/login`
 
-POST /rentals
+**Vehicles:**
 
-GET /rentals/my-rentals
+- `GET /vehicles` (Supports filtering, searching, sorting, and pagination)
+- `GET /vehicles/:id`
 
-GET /rentals/:id
+**Rentals:**
 
-PATCH /rentals/cancel/:id
+- `POST /rentals`
+- `GET /rentals/my-rentals`
+- `GET /rentals/:id`
+- `PATCH /rentals/cancel/:id`
+- `GET /rentals` (Admin)
+- `PATCH /rentals/status/:id` (Admin)
 
-GET /rentals (Admin)
+**AI Recommendation:**
 
-PATCH /rentals/status/:id (Admin)
+- `POST /ai/recommend`
 
-AI Recommendation:
+**AI Request Payload:**
 
-POST /ai/recommend
-
-AI Request Payload:
-JSON
+```json
 {
-"preferences": "I need a comfortable hybrid SUV for a family of 5."
+  "preferences": "I need a comfortable hybrid SUV for a family of 5."
 }
-AI Response Payload:
-JSON
+```
+
+**AI Response Payload:**
+
+```json
 {
-"success": true,
-"message": "Vehicle recommendation generated successfully",
-"data": {
-"vehicleId": "6a9aa2a854839a8165acce40",
-"vehicleName": "RAV4",
-"reason": "The Toyota RAV4 is a spacious, highly rated (4.8) 5-seater hybrid SUV that offers a comfortable ride, excellent fuel economy, and great value at $78/day."
+  "success": true,
+  "message": "Vehicle recommendation generated successfully",
+  "data": {
+    "vehicleId": "6a9aa2a854839a8165acce40",
+    "vehicleName": "RAV4",
+    "reason": "The Toyota RAV4 is a spacious, highly rated (4.8) 5-seater hybrid SUV that offers a comfortable ride, excellent fuel economy, and great value at $78/day."
+  }
 }
-}
-Project Structure
-Plaintext
+```
+
+---
+
+## Project Structure
+
+```
 digital-pylot-assesment/
 │
 ├── frontend/
-│ └── src/
-│ ├── assets/
-│ ├── components/
-│ │ ├── customer/
-│ │ ├── form/
-│ │ └── layout/
-│ ├── pages/
-│ │ ├── admin/
-│ │ └── user/
-│ ├── redux/
-│ │ ├── api/
-│ │ └── features/
-│ ├── routes/
-│ ├── types/
-│ └── utils/
+│   └── src/
+│       ├── assets/
+│       ├── components/
+│       │   ├── customer/
+│       │   ├── form/
+│       │   └── layout/
+│       ├── pages/
+│       │   ├── admin/
+│       │   └── user/
+│       ├── redux/
+│       │   ├── api/
+│       │   └── features/
+│       ├── routes/
+│       ├── types/
+│       └── utils/
 │
 ├── backend/
-│ └── src/
-│ └── app/
-│ ├── config/
-│ ├── middlewares/
-│ ├── modules/
-│ │ ├── auth/
-│ │ ├── user/
-│ │ ├── vehicle/
-│ │ ├── rental/
-│ │ └── ai/
-│ └── routes/
+│   └── src/
+│       └── app/
+│           ├── config/
+│           ├── middlewares/
+│           ├── modules/
+│           │   ├── auth/
+│           │   ├── user/
+│           │   ├── vehicle/
+│           │   ├── rental/
+│           │   └── ai/
+│           └── routes/
 │
 ├── automation/
-│ └── n8n-booking-workflow.json
+│   └── n8n-booking-workflow.json
 │
 └── README.md
-Local Development
+```
 
-1. Backend Setup
-   Bash
-   cd backend
-   npm install
-   npm run dev
-2. Frontend Setup
-   Bash
-   cd frontend
-   npm install
-   npm run dev
-3. Environment Variables
-   Environment variables are excluded from version control. Configure your backend/.env:
+---
 
-Code snippet
+## Local Development
+
+### 1. Backend Setup
+
+```bash
+cd backend
+npm install
+npm run dev
+```
+
+### 2. Frontend Setup
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+### 3. Environment Variables
+
+Environment variables are excluded from version control. Configure your `backend/.env`:
+
+```
 PORT=5001
 MONGODB_URI=your_mongodb_connection_string
 JWT_ACCESS_SECRET=your_jwt_access_secret
 JWT_REFRESH_SECRET=your_jwt_refresh_secret
 GEMINI_API_KEY=your_gemini_api_key
 N8N_RENTAL_WEBHOOK_URL=http://localhost:5678/webhook/booking-alert
-Authentication & Roles
+```
+
+---
+
+## Authentication & Roles
+
 The platform uses JWT-based authentication supporting two primary roles:
 
-user: Can browse, use AI recommendations, make bookings, and view personal rental histories.
+- **user**: Can browse, use AI recommendations, make bookings, and view personal rental histories.
+- **admin**: Has restricted access to the fleet management dashboard, inventory updates, and overall booking metrics.
 
-admin: Has restricted access to the fleet management dashboard, inventory updates, and overall booking metrics.
+---
 
-Assessment Coverage Summary
-Customer Front-End: Modern responsive UI, search/filtering, details, booking flow.
+## Assessment Coverage Summary
 
-Admin Dashboard: Statistics, charts, metrics, and protected routing.
-
-AI Vehicle Recommendation: Integrated gemini-3.6-flash parsing user intent against live MongoDB inventory.
-
-API & Backend: Clean Express architecture, Zod validation, JWT security, Mongoose schemas.
-
-Automation Workflow: Event-driven n8n POST webhook triggering Telegram administrative alerts.
+- **Customer Front-End:** Modern responsive UI, search/filtering, details, booking flow.
+- **Admin Dashboard:** Statistics, charts, metrics, and protected routing.
+- **AI Vehicle Recommendation:** Integrated gemini-3.6-flash parsing user intent against live MongoDB inventory.
+- **API & Backend:** Clean Express architecture, Zod validation, JWT security, Mongoose schemas.
+- **Automation Workflow:** Event-driven n8n POST webhook triggering Telegram administrative alerts.
