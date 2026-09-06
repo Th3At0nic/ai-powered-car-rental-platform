@@ -61,4 +61,6 @@ export default {
   appleClientId: process.env.APPLE_CLIENT_ID,
 
   gemini_api_key: process.env.GEMINI_API_KEY,
+
+  n8n_webhook_url: process.env.n8n_webhook_url,
 };
