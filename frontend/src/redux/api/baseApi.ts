@@ -10,7 +10,8 @@ import { logoutUser, setUser } from "../features/auth/authSlice";
 import { toast } from "sonner";
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: "http://localhost:5001/api/v1",
+  // baseUrl: "http://localhost:5001/api/v1",
+  baseUrl: "drive-pilot-backend.vercel.app/api/v1",
   credentials: "include",
   prepareHeaders: (headers, { getState }) => {
     const token = (getState() as RootState).auth.token;
@@ -45,7 +46,7 @@ const baseQueryWithRefreshToken: BaseQueryFn<
       {
         method: "POST",
         credentials: "include",
-      }
+      },
     ).then((response) => response.json());
 
     if (refreshResult?.data?.accessToken) {
@@ -55,7 +56,7 @@ const baseQueryWithRefreshToken: BaseQueryFn<
         setUser({
           user,
           token: refreshResult.data.accessToken,
-        })
+        }),
       );
 
       // calling the base query again to auto reload the page/query to capture the result after accessing the new access token and authorization, it doesn't visually reloads the page, it update the state internally without reloading the page
