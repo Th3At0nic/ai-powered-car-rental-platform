@@ -2,7 +2,7 @@ import { z } from 'zod';
 
 export const createRentalValidationSchema = z.object({
   body: z.object({
-    vehicle: z.string().min(1, 'Vehicle ID is required'),
+    vehicleId: z.string().min(1, 'Vehicle ID is required'),
 
     pickupLocation: z.string().trim().min(2, 'Pickup location is required'),
 

@@ -59,4 +59,6 @@ export default {
   firebasePrivateKey: process.env.FIREBASE_PRIVATE_KEY,
 
   appleClientId: process.env.APPLE_CLIENT_ID,
+
+  gemini_api_key: process.env.GEMINI_API_KEY,
 };
