@@ -11,6 +11,7 @@ import {
   UserOutlined,
 } from "@ant-design/icons";
 import { useState, type ReactNode } from "react";
+import AIVehicleRecommendation from "../components/customer/AIVehicleRecommendation";
 import VehicleCard from "../components/customer/VehicleCard";
 import { useGetAllVehiclesQuery } from "../redux/features/vehicle/vehicleApi";
 
@@ -324,6 +325,7 @@ const CustomerHome = () => {
             <div className="section-heading-row">
               <div>
                 <p className="eyebrow">FIND YOUR MATCH</p>
+            <AIVehicleRecommendation />
                 <h2>Most popular car rental deals</h2>
                 <p>
                   Explore our handpicked fleet, made for every kind of journey.
