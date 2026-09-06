@@ -1,0 +1,95 @@
+{
+  "name": "My workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "drivepilot-rental-created",
+        "responseMode": "lastNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "d7ce331f-6d0e-4f0c-9e8e-171c5bbacac6",
+      "name": "Webhook",
+      "webhookId": "57b93cf9-a921-457e-b752-eeebd1151626"
+    },
+    {
+      "parameters": {
+        "jsCode": "const rental = $json.body.rental;\nconst customer = $json.body.customer;\nconst vehicle = $json.body.vehicle;\n\nconst pickupDate = new Date(rental.pickupDate).toLocaleDateString();\nconst dropoffDate = new Date(rental.dropoffDate).toLocaleDateString();\n\nconst message = `\n🚗 *New Rental Created — DrivePilot*\n\n👤 *Customer*\n${customer.name}\n${customer.email}\n\n🚘 *Vehicle*\n${vehicle.brand} ${vehicle.name}\n${vehicle.category} • ${vehicle.fuelType} • ${vehicle.transmission}\n\n📍 *Rental Details*\nPickup: ${rental.pickupLocation}\nDrop-off: ${rental.dropoffLocation}\n\n📅 *Dates*\nPickup: ${pickupDate}\nDrop-off: ${dropoffDate}\n\n⏱ *Duration*\n${rental.totalDays} day(s)\n\n💰 *Pricing*\n$${rental.pricePerDay}/day\nTotal: *$${rental.totalAmount}*\n\n📌 *Status*\n${rental.status}\n\n🆔 *Rental ID*\n${rental.id || rental._id || $json.rentalId}\n`;\n\nreturn [\n  {\n    json: {\n      message,\n    },\n  },\n];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        224,
+        0
+      ],
+      "id": "b5c4c4cb-9b94-49d5-82e1-1ce00639fdea",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "chatId": "8464286860",
+        "text": "={{$json.message}}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        448,
+        0
+      ],
+      "id": "e995c848-a60d-48b8-a593-6f12fa630cad",
+      "name": "Send a text message",
+      "webhookId": "2f72123e-e9e8-48c4-ac9b-3fa5be5e22c2",
+      "credentials": {
+        "telegramApi": {
+          "id": "HlPhQJIzsFDCztUt",
+          "name": "Telegram account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Send a text message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "4aa9472b-653e-4611-8c5b-6f0206558621",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "a814cfcf0ef509dc913e945c3288c0776346d046f86582cdd5370d3840840ed0"
+  },
+  "nodeGroups": [],
+  "id": "QCf1SC2uW8Tu8GSw",
+  "tags": []
+}
