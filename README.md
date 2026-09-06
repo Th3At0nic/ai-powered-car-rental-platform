@@ -95,3 +95,185 @@ Rental data formatting
         ↓
 Telegram notification
 ```
+
+The automated Telegram notification contains complete reservation details, including:
+
+Customer Name & Email
+
+Vehicle details (Brand, Name, Category, Fuel Type, Transmission)
+
+Pickup & Drop-off Locations
+
+Pickup & Drop-off Dates
+
+Rental Duration & Daily Pricing
+
+Total Amount
+
+Rental Status & Rental ID
+
+The automation is decoupled as a secondary non-blocking process so that temporary webhook failures never impact database transactions or booking confirmation.
+
+Technology Stack
+Frontend: React, TypeScript, Vite, Tailwind CSS, Redux Toolkit, RTK Query, Ant Design
+
+Backend: Node.js, Express.js, TypeScript, MongoDB, Mongoose, Zod, JWT Authentication, bcrypt
+
+AI: Google Gemini API (gemini-3.6-flash)
+
+Automation: n8n Community Edition, Telegram Bot API
+
+System Architecture
+Plaintext
+┌─────────────────────┐
+│ MongoDB │
+│ Atlas │
+└──────────┬──────────┘
+│
+│
+┌─────────────────┐ ┌────────▼────────┐
+│ │ │ │
+│ React Frontend │──────▶│ Express Backend │
+│ │ │ │
+└─────────────────┘ └───────┬─────────┘
+│
+┌─────────────┴──────────────┐
+│ │
+▼ ▼
+┌─────────────┐ ┌─────────────┐
+│ Gemini API │ │ n8n │
+│ AI Vehicle │ │ Automation │
+│ Recommend. │ └──────┬──────┘
+└─────────────┘ │
+▼
+┌─────────────┐
+│ Telegram │
+│ Notification│
+└─────────────┘
+Backend API Architecture
+Base URL: /api/v1
+
+Main Endpoints
+Authentication:
+
+POST /auth/register
+
+POST /auth/login
+
+Vehicles:
+
+GET /vehicles (Supports filtering, searching, sorting, and pagination)
+
+GET /vehicles/:id
+
+Rentals:
+
+POST /rentals
+
+GET /rentals/my-rentals
+
+GET /rentals/:id
+
+PATCH /rentals/cancel/:id
+
+GET /rentals (Admin)
+
+PATCH /rentals/status/:id (Admin)
+
+AI Recommendation:
+
+POST /ai/recommend
+
+AI Request Payload:
+JSON
+{
+"preferences": "I need a comfortable hybrid SUV for a family of 5."
+}
+AI Response Payload:
+JSON
+{
+"success": true,
+"message": "Vehicle recommendation generated successfully",
+"data": {
+"vehicleId": "6a9aa2a854839a8165acce40",
+"vehicleName": "RAV4",
+"reason": "The Toyota RAV4 is a spacious, highly rated (4.8) 5-seater hybrid SUV that offers a comfortable ride, excellent fuel economy, and great value at $78/day."
+}
+}
+Project Structure
+Plaintext
+digital-pylot-assesment/
+│
+├── frontend/
+│ └── src/
+│ ├── assets/
+│ ├── components/
+│ │ ├── customer/
+│ │ ├── form/
+│ │ └── layout/
+│ ├── pages/
+│ │ ├── admin/
+│ │ └── user/
+│ ├── redux/
+│ │ ├── api/
+│ │ └── features/
+│ ├── routes/
+│ ├── types/
+│ └── utils/
+│
+├── backend/
+│ └── src/
+│ └── app/
+│ ├── config/
+│ ├── middlewares/
+│ ├── modules/
+│ │ ├── auth/
+│ │ ├── user/
+│ │ ├── vehicle/
+│ │ ├── rental/
+│ │ └── ai/
+│ └── routes/
+│
+├── automation/
+│ └── n8n-booking-workflow.json
+│
+└── README.md
+Local Development
+
+1. Backend Setup
+   Bash
+   cd backend
+   npm install
+   npm run dev
+2. Frontend Setup
+   Bash
+   cd frontend
+   npm install
+   npm run dev
+3. Environment Variables
+   Environment variables are excluded from version control. Configure your backend/.env:
+
+Code snippet
+PORT=5001
+MONGODB_URI=your_mongodb_connection_string
+JWT_ACCESS_SECRET=your_jwt_access_secret
+JWT_REFRESH_SECRET=your_jwt_refresh_secret
+GEMINI_API_KEY=your_gemini_api_key
+N8N_RENTAL_WEBHOOK_URL=http://localhost:5678/webhook/booking-alert
+Authentication & Roles
+The platform uses JWT-based authentication supporting two primary roles:
+
+user: Can browse, use AI recommendations, make bookings, and view personal rental histories.
+
+admin: Has restricted access to the fleet management dashboard, inventory updates, and overall booking metrics.
+
+Assessment Coverage Summary
+Customer Front-End: Modern responsive UI, search/filtering, details, booking flow.
+
+Admin Dashboard: Statistics, charts, metrics, and protected routing.
+
+AI Vehicle Recommendation: Integrated gemini-3.6-flash parsing user intent against live MongoDB inventory.
+
+API & Backend: Clean Express architecture, Zod validation, JWT security, Mongoose schemas.
+
+Automation Workflow: Event-driven n8n POST webhook triggering Telegram administrative alerts.
