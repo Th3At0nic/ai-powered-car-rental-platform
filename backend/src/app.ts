@@ -16,7 +16,15 @@ app.use((req, res, next) => {
 
   return jsonParser(req, res, next);
 });
-app.use(cors({ origin: 'http://localhost:5173', credentials: true }));
+app.use(
+  cors({
+    origin: [
+      'http://localhost:5173',
+      'https://drive-pilot-frontend.vercel.app',
+    ],
+    credentials: true,
+  }),
+);
 
 app.use('/api/v1', router);
 
