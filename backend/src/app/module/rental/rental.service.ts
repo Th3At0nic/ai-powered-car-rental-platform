@@ -184,7 +184,7 @@ const updateRentalStatusIntoDB = async (
   const rental = await RentalModel.findById(rentalId);
 
   if (!rental) {
-    throwAppError('rentalId', 'Rental not found', StatusCodes.NOT_FOUND);
+    return throwAppError('rentalId', 'Rental not found', StatusCodes.NOT_FOUND);
   }
 
   rental.status = status;
