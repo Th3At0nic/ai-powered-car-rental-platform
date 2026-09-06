@@ -1,11 +1,13 @@
 import mongoose from 'mongoose';
 import { RentalModel } from './rental.model';
 import { VehicleModel } from '../vehicle/vehicle.model';
+import { StatusCodes } from 'http-status-codes';
+import throwAppError from '../../utils/throwAppError';
 
 const createRentalIntoDB = async (
   userId: string,
   payload: {
-    vehicle: string;
+    vehicleId: string;
     pickupLocation: string;
     dropoffLocation: string;
     pickupDate: string;
@@ -19,29 +21,49 @@ const createRentalIntoDB = async (
     Number.isNaN(pickupDate.getTime()) ||
     Number.isNaN(dropoffDate.getTime())
   ) {
-    throw new Error('Invalid rental dates');
+    throwAppError('date', 'Invalid rental dates', StatusCodes.BAD_REQUEST);
   }
 
   if (dropoffDate <= pickupDate) {
-    throw new Error('Dropoff date must be after pickup date');
+    throwAppError(
+      'date',
+      'Dropoff date must be after pickup date',
+      StatusCodes.BAD_REQUEST,
+    );
   }
 
   if (pickupDate < new Date()) {
-    throw new Error('Pickup date cannot be in the past');
+    throwAppError(
+      'date',
+      'Pickup date cannot be in the past',
+      StatusCodes.BAD_REQUEST,
+    );
   }
 
-  if (!mongoose.Types.ObjectId.isValid(payload.vehicle)) {
-    throw new Error('Invalid vehicle ID');
+  if (!mongoose.Types.ObjectId.isValid(payload.vehicleId)) {
+    throwAppError(
+      'date',
+      'Pickup date cannot be in the past',
+      StatusCodes.BAD_REQUEST,
+    );
   }
 
-  const vehicle = await VehicleModel.findById(payload.vehicle);
+  const vehicle = await VehicleModel.findById(payload.vehicleId);
 
   if (!vehicle) {
-    throw new Error('Vehicle not found');
+    return throwAppError(
+      'vehicleId',
+      'Vehicle not found',
+      StatusCodes.NOT_FOUND,
+    );
   }
 
   if (!vehicle.isAvailable) {
-    throw new Error('This vehicle is currently unavailable');
+    throwAppError(
+      'vehicleId',
+      'This vehicle is currently unavailable',
+      StatusCodes.FORBIDDEN,
+    );
   }
 
   /*
@@ -54,14 +76,18 @@ const createRentalIntoDB = async (
    * Cancelled rentals are ignored.
    */
   const overlappingRental = await RentalModel.findOne({
-    vehicle: payload.vehicle,
+    vehicle: payload.vehicleId,
     status: { $in: ['pending', 'confirmed'] },
     pickupDate: { $lt: dropoffDate },
     dropoffDate: { $gt: pickupDate },
   });
 
   if (overlappingRental) {
-    throw new Error('This vehicle is already booked for the selected dates');
+    throwAppError(
+      'vehicleId',
+      'This vehicle is already booked for the selected dates',
+      StatusCodes.CONFLICT,
+    );
   }
 
   const millisecondsPerDay = 1000 * 60 * 60 * 24;
@@ -105,7 +131,7 @@ const getSingleRentalFromDB = async (rentalId: string, userId: string) => {
   }).populate('vehicle', 'name brand image pricePerDay category location');
 
   if (!rental) {
-    throw new Error('Rental not found');
+    throwAppError('rentalId', 'Rental not found', StatusCodes.NOT_FOUND);
   }
 
   return rental;
@@ -118,15 +144,23 @@ const cancelRentalFromDB = async (rentalId: string, userId: string) => {
   });
 
   if (!rental) {
-    throw new Error('Rental not found');
+    return throwAppError('rentalId', 'Rental not found', StatusCodes.NOT_FOUND);
   }
 
   if (rental.status === 'cancelled') {
-    throw new Error('Rental is already cancelled');
+    throwAppError(
+      'status',
+      'Rental is already cancelled',
+      StatusCodes.BAD_REQUEST,
+    );
   }
 
   if (rental.status === 'completed') {
-    throw new Error('Completed rental cannot be cancelled');
+    throwAppError(
+      'status',
+      'Completed rental cannot be cancelled',
+      StatusCodes.BAD_REQUEST,
+    );
   }
 
   rental.status = 'cancelled';
@@ -150,7 +184,7 @@ const updateRentalStatusIntoDB = async (
   const rental = await RentalModel.findById(rentalId);
 
   if (!rental) {
-    throw new Error('Rental not found');
+    throwAppError('rentalId', 'Rental not found', StatusCodes.NOT_FOUND);
   }
 
   rental.status = status;

@@ -5,7 +5,7 @@ export type TRentalStatus = 'pending' | 'confirmed' | 'cancelled' | 'completed';
 export type TRental = {
   _id?: string;
   user: Types.ObjectId;
-  vehicle: Types.ObjectId;
+  vehicleId: Types.ObjectId;
 
   pickupLocation: string;
   dropoffLocation: string;
