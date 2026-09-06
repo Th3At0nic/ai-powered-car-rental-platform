@@ -3,11 +3,13 @@ import { RentalModel } from './rental.model';
 import { VehicleModel } from '../vehicle/vehicle.model';
 import { StatusCodes } from 'http-status-codes';
 import throwAppError from '../../utils/throwAppError';
+import config from '../../config';
+import { UserModel } from '../user/user.model';
 
 const createRentalIntoDB = async (
   userId: string,
   payload: {
-    vehicleId: string;
+    vehicle: string;
     pickupLocation: string;
     dropoffLocation: string;
     pickupDate: string;
@@ -40,7 +42,7 @@ const createRentalIntoDB = async (
     );
   }
 
-  if (!mongoose.Types.ObjectId.isValid(payload.vehicleId)) {
+  if (!mongoose.Types.ObjectId.isValid(payload.vehicle)) {
     throwAppError(
       'date',
       'Pickup date cannot be in the past',
@@ -48,7 +50,7 @@ const createRentalIntoDB = async (
     );
   }
 
-  const vehicle = await VehicleModel.findById(payload.vehicleId);
+  const vehicle = await VehicleModel.findById(payload.vehicle);
 
   if (!vehicle) {
     return throwAppError(
@@ -76,7 +78,7 @@ const createRentalIntoDB = async (
    * Cancelled rentals are ignored.
    */
   const overlappingRental = await RentalModel.findOne({
-    vehicle: payload.vehicleId,
+    vehicle: payload.vehicle,
     status: { $in: ['pending', 'confirmed'] },
     pickupDate: { $lt: dropoffDate },
     dropoffDate: { $gt: pickupDate },
@@ -114,6 +116,36 @@ const createRentalIntoDB = async (
 
     status: 'pending',
   });
+
+  const userByid = await UserModel.findById(userId).lean();
+
+  if (!userByid) {
+    return throwAppError('userByid', 'User not found', StatusCodes.NOT_FOUND);
+  }
+
+  try {
+    await fetch((config.n8n_webhook_url as string) || '', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        event: 'rental.created',
+        rental: rental,
+        customer: { name: userByid.fullName, email: userByid.email },
+        vehicle: {
+          name: vehicle.name,
+          brand: vehicle.brand,
+          category: vehicle.category,
+          fuelType: vehicle.fuelType,
+          transmission: vehicle.transmission,
+        },
+      }),
+    });
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (error: any) {
+    console.log('n8n automation failed, here is the reason: ', error);
+  }
 
   return rental;
 };

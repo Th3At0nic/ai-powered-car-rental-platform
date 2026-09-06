@@ -9,7 +9,7 @@ const rentalSchema = new Schema<TRental>(
       required: true,
     },
 
-    vehicleId: {
+    vehicle: {
       type: Schema.Types.ObjectId,
       ref: 'Vehicle',
       required: true,
