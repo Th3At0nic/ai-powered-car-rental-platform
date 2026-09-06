@@ -8,7 +8,7 @@ import throwAppError from '../../utils/throwAppError';
 const gemini = new GoogleGenerativeAI(config.gemini_api_key as string);
 
 const model = gemini.getGenerativeModel({
-  model: 'gemini-2.5-flash',
+  model: 'gemini-3.6-flash',
 });
 
 const getAIRecommendation = async (payload: TAIRecommendationRequest) => {
@@ -127,8 +127,11 @@ Required JSON format:
     };
   } catch (error) {
     if (error && typeof error === 'object' && 'statusCode' in error) {
+      console.log('here is the ai error:', error);
       throw error;
     }
+
+    console.log('here is the ai error 2:', error);
 
     throwAppError(
       'ai',
