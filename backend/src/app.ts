@@ -23,8 +23,8 @@ app.use('/api/v1', router);
 app.use('/uploads', express.static(path.join(process.cwd(), 'uploads'))); //this is to serve the uploaded files statically
 
 app.get('/', (req: Request, res: Response) => {
-  // res.send('Hello World!');
-  res.render('index.ejs');
+  res.send('Hello World!');
+  // res.render('index.ejs');
 });
 
 //this is the global error handler
