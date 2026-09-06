@@ -3,6 +3,8 @@ import { UserModel } from '../user/user.model';
 import { USER_ROLE } from '../user/user.constant';
 import { TLoginUser, TRegisterUser, TUserAuthData } from './auth.interface';
 import { generateToken } from './auth.utils';
+import throwAppError from '../../utils/throwAppError';
+import { StatusCodes } from 'http-status-codes';
 
 const registerUserIntoDB = async (payload: TRegisterUser) => {
   const existingUser = await UserModel.findOne({
@@ -10,7 +12,11 @@ const registerUserIntoDB = async (payload: TRegisterUser) => {
   });
 
   if (existingUser) {
-    throw new Error('An account with this email already exists');
+    throwAppError(
+      'email',
+      'An account with this email already exists',
+      StatusCodes.CONFLICT,
+    );
   }
 
   const user = await UserModel.create({
@@ -32,7 +38,11 @@ const loginUserIntoDB = async (payload: TLoginUser) => {
   const user = await UserModel.isUserExists(payload.email);
 
   if (!user) {
-    throw new Error('No account found with this email');
+    return throwAppError(
+      'email',
+      'No account found with this email',
+      StatusCodes.NOT_FOUND,
+    );
   }
 
   const isPasswordCorrect = await UserModel.isPasswordCorrect(
@@ -41,7 +51,7 @@ const loginUserIntoDB = async (payload: TLoginUser) => {
   );
 
   if (!isPasswordCorrect) {
-    throw new Error('Incorrect password');
+    throwAppError('password', 'Incorrect password', StatusCodes.BAD_REQUEST);
   }
 
   const jwtPayload: TUserAuthData = {

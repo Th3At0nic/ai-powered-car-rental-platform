@@ -127,12 +127,8 @@ Required JSON format:
     };
   } catch (error) {
     if (error && typeof error === 'object' && 'statusCode' in error) {
-      console.log('here is the ai error:', error);
       throw error;
     }
-
-    console.log('here is the ai error 2:', error);
-
     throwAppError(
       'ai',
       'Failed to generate vehicle recommendation',
