@@ -142,7 +142,7 @@ const createRentalIntoDB = async (
         },
       }),
     });
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
     // eslint-disable-next-line no-console
     console.log('n8n automation failed, here is the reason: ', error);

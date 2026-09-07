@@ -9,13 +9,16 @@ The platform provides a customer-facing car rental experience, a protected admin
 ## Live Demo
 
 **Customer Frontend:**
-[Add deployed frontend URL]
+[https://drive-pilot-frontend.vercel.app]
 
 **Admin Dashboard:**
-[Add deployed frontend URL]/admin
+[https://drive-pilot-frontend.vercel.app/admin/dashboard]
+
+- **Email:** `admin@example.com`
+- **Password:** `Password123!`
 
 **Backend API:**
-[Add deployed backend API URL]
+[https://drive-pilot-server.vercel.app]
 
 ---
 
@@ -23,6 +26,15 @@ The platform provides a customer-facing car rental experience, a protected admin
 
 **GitHub:**
 https://github.com/Th3At0nic/ai-powered-car-rental-platform
+
+---
+
+### Admin Demo Credentials
+
+For assessment testing and administrative access:
+
+- **Email:** `admin@example.com`
+- **Password:** `Password123!`
 
 ---
 
@@ -121,7 +133,7 @@ The automation is decoupled as a secondary non-blocking process so that temporar
 
 ```
                  ┌─────────────────────┐
-                 │     MongoDB Atlas    │
+                 │     MongoDB Atlas   │
                  └──────────┬──────────┘
                             │
 ┌─────────────────┐   ┌─────▼───────────┐
@@ -129,13 +141,13 @@ The automation is decoupled as a secondary non-blocking process so that temporar
 └─────────────────┘   └───────┬─────────┘
                                │
                 ┌──────────────┴──────────────┐
-                │                              │
-         ┌──────▼──────┐               ┌───────▼──────┐
+                │                             │
+         ┌──────▼──────┐               ┌──────▼───────┐
          │ Gemini API  │               │      n8n     │
          │ AI Vehicle  │               │  Automation  │
          │ Recommend.  │               └───────┬──────┘
          └─────────────┘                       │
-                                        ┌───────▼──────┐
+                                        ┌──────▼───────┐
                                         │   Telegram   │
                                         │ Notification │
                                         └──────────────┘
@@ -262,12 +274,16 @@ npm run dev
 Environment variables are excluded from version control. Configure your `backend/.env`:
 
 ```
+NODE_ENV=
 PORT=5001
-MONGODB_URI=your_mongodb_connection_string
+DATABASE_URL=your_mongodb_connection_string
+BCRYPT_SALT_ROUND=
 JWT_ACCESS_SECRET=your_jwt_access_secret
 JWT_REFRESH_SECRET=your_jwt_refresh_secret
+JWT_ACCESS_EXPIRES_IN=15d
+JWT_REFRESH_EXPIRES_IN=90d
 GEMINI_API_KEY=your_gemini_api_key
-N8N_RENTAL_WEBHOOK_URL=http://localhost:5678/webhook/booking-alert
+N8N_WEBHOOK_URL=http://localhost:5678/webhook-test/drivepilot-rental-created
 ```
 
 ---
