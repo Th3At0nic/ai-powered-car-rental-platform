@@ -1,0 +1,1837 @@
+{
+	"info": {
+		"_postman_id": "cce3965f-2883-4eb8-9560-283b54b9b19b",
+		"name": "Drive-Pilot (Ai-powered car rental platform)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "47770781"
+	},
+	"item": [
+		{
+			"name": "Vehicle",
+			"item": [
+				{
+					"name": "Create Vehicle",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{signer_access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Camry Hybrid\",\n    \"brand\": \"Toyota\",\n    \"category\": \"sedan\",\n    \"image\": \"https://images.unsplash.com/photo-1621007947382-bb3c3994e3fb\",\n    \"pricePerDay\": 65.00,\n    \"seats\": 5,\n    \"transmission\": \"automatic\",\n    \"fuelType\": \"hybrid\",\n    \"location\": \"Dhaka\",\n    \"rating\": 4.9,\n    \"isAvailable\": true,\n    \"description\": \"Comfortable 5-seater hybrid sedan ideal for long city rides and highway travel with excellent fuel efficiency.\",\n    \"features\": [\n        \"Leather Seats\",\n        \"Adaptive Cruise Control\",\n        \"Apple CarPlay & Android Auto\",\n        \"360 Camera\",\n        \"Dual-Zone Climate Control\"\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url_local}}/vehicles",
+							"host": [
+								"{{base_url_local}}"
+							],
+							"path": [
+								"vehicles"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Create Vehicle Res",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{signer_access_token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Camry Hybrid\",\n    \"brand\": \"Toyota\",\n    \"category\": \"sedan\",\n    \"image\": \"https://images.unsplash.com/photo-1621007947382-bb3c3994e3fb\",\n    \"pricePerDay\": 65.00,\n    \"seats\": 5,\n    \"transmission\": \"automatic\",\n    \"fuelType\": \"hybrid\",\n    \"location\": \"Dhaka\",\n    \"rating\": 4.9,\n    \"isAvailable\": true,\n    \"description\": \"Comfortable 5-seater hybrid sedan ideal for long city rides and highway travel with excellent fuel efficiency.\",\n    \"features\": [\n        \"Leather Seats\",\n        \"Adaptive Cruise Control\",\n        \"Apple CarPlay & Android Auto\",\n        \"360 Camera\",\n        \"Dual-Zone Climate Control\"\n    ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "/vehicles",
+									"path": [
+										"vehicles"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "http://localhost:5173"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "693"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"2b5-4zn99V4dVOETy+Me5z3HbEqdY1o\""
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 04 Sep 2026 05:31:46 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"message\": \"Vehicle created successfully\",\n    \"data\": {\n        \"name\": \"Camry Hybrid\",\n        \"brand\": \"Toyota\",\n        \"category\": \"sedan\",\n        \"image\": \"https://images.unsplash.com/photo-1621007947382-bb3c3994e3fb\",\n        \"pricePerDay\": 65,\n        \"seats\": 5,\n        \"transmission\": \"automatic\",\n        \"fuelType\": \"hybrid\",\n        \"location\": \"Dhaka\",\n        \"rating\": 4.9,\n        \"isAvailable\": true,\n        \"description\": \"Comfortable 5-seater hybrid sedan ideal for long city rides and highway travel with excellent fuel efficiency.\",\n        \"features\": [\n            \"Leather Seats\",\n            \"Adaptive Cruise Control\",\n            \"Apple CarPlay & Android Auto\",\n            \"360 Camera\",\n            \"Dual-Zone Climate Control\"\n        ],\n        \"_id\": \"6a9a57c2aa6041bcb4910f9e\",\n        \"createdAt\": \"2026-09-04T05:31:46.143Z\",\n        \"updatedAt\": \"2026-09-04T05:31:46.143Z\",\n        \"__v\": 0\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Get Vehicles",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{base_url_live}}/vehicles",
+							"host": [
+								"{{base_url_live}}"
+							],
+							"path": [
+								"vehicles"
+							],
+							"query": [
+								{
+									"key": "searchTerm",
+									"value": "Toyota",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get Vehicle Res",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{signer_access_token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "/vehicles",
+									"path": [
+										"vehicles"
+									],
+									"query": [
+										{
+											"key": "searchTerm",
+											"value": "Toyota",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "http://localhost:5173"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "751"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"2ef-1ZdpPBlwTlzeicHL4uJmjNrZNf0\""
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 04 Sep 2026 05:44:28 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"message\": \"Vehicles fetched successfully\",\n    \"data\": {\n        \"meta\": {\n            \"page\": 1,\n            \"limit\": 200,\n            \"total\": 1,\n            \"totalPage\": 1\n        },\n        \"data\": [\n            {\n                \"_id\": \"6a9a57c2aa6041bcb4910f9e\",\n                \"name\": \"Camry Hybrid\",\n                \"brand\": \"Toyota\",\n                \"category\": \"sedan\",\n                \"image\": \"https://images.unsplash.com/photo-1621007947382-bb3c3994e3fb\",\n                \"pricePerDay\": 65,\n                \"seats\": 5,\n                \"transmission\": \"automatic\",\n                \"fuelType\": \"hybrid\",\n                \"location\": \"Dhaka\",\n                \"rating\": 4.9,\n                \"isAvailable\": true,\n                \"description\": \"Comfortable 5-seater hybrid sedan ideal for long city rides and highway travel with excellent fuel efficiency.\",\n                \"features\": [\n                    \"Leather Seats\",\n                    \"Adaptive Cruise Control\",\n                    \"Apple CarPlay & Android Auto\",\n                    \"360 Camera\",\n                    \"Dual-Zone Climate Control\"\n                ],\n                \"createdAt\": \"2026-09-04T05:31:46.143Z\",\n                \"updatedAt\": \"2026-09-04T05:31:46.143Z\"\n            }\n        ]\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Get Single Vehicle",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{signer_access_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url_local}}/vehicles/6a9a57c2aa6041bcb4910f9e",
+							"host": [
+								"{{base_url_local}}"
+							],
+							"path": [
+								"vehicles",
+								"6a9a57c2aa6041bcb4910f9e"
+							],
+							"query": [
+								{
+									"key": "searchTerm",
+									"value": "Toyota",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get Single Vehicle res",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{signer_access_token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "/vehicles/6a9a57c2aa6041bcb4910f9e",
+									"path": [
+										"vehicles",
+										"6a9a57c2aa6041bcb4910f9e"
+									],
+									"query": [
+										{
+											"key": "searchTerm",
+											"value": "Toyota",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "http://localhost:5173"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "693"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"2b5-fRTrlu3CINpU4ZRalwpF79k0K0U\""
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 04 Sep 2026 06:04:27 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"message\": \"Vehicle fetched successfully\",\n    \"data\": {\n        \"_id\": \"6a9a57c2aa6041bcb4910f9e\",\n        \"name\": \"Camry Hybrid\",\n        \"brand\": \"Toyota\",\n        \"category\": \"sedan\",\n        \"image\": \"https://images.unsplash.com/photo-1621007947382-bb3c3994e3fb\",\n        \"pricePerDay\": 65,\n        \"seats\": 5,\n        \"transmission\": \"automatic\",\n        \"fuelType\": \"hybrid\",\n        \"location\": \"Dhaka\",\n        \"rating\": 4.9,\n        \"isAvailable\": true,\n        \"description\": \"Comfortable 5-seater hybrid sedan ideal for long city rides and highway travel with excellent fuel efficiency.\",\n        \"features\": [\n            \"Leather Seats\",\n            \"Adaptive Cruise Control\",\n            \"Apple CarPlay & Android Auto\",\n            \"360 Camera\",\n            \"Dual-Zone Climate Control\"\n        ],\n        \"createdAt\": \"2026-09-04T05:31:46.143Z\",\n        \"updatedAt\": \"2026-09-04T05:31:46.143Z\",\n        \"__v\": 0\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Update Vehicle",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{signer_access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"location\": \"Rajshahi\",\n    \"rating\": 4.9,\n    \"isAvailable\": true,\n    \"description\": \"Comfortable 5-seater hybrid sedan ideal for long city rides and highway travel with excellent fuel efficiency.\",\n    \"features\": [\n        \"Leather Seats\",\n        \"Adaptive Cruise Control\",\n        \"Apple CarPlay & Android Auto\",\n        \"360 Camera\",\n        \"Dual-Zone Climate Control\"\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url_local}}/vehicles/6a9a57c2aa6041bcb4910f9e",
+							"host": [
+								"{{base_url_local}}"
+							],
+							"path": [
+								"vehicles",
+								"6a9a57c2aa6041bcb4910f9e"
+							],
+							"query": [
+								{
+									"key": "searchTerm",
+									"value": "Toyota",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Update Vehicle Res",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{signer_access_token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"location\": \"Rajshahi\",\n    \"rating\": 4.9,\n    \"isAvailable\": true,\n    \"description\": \"Comfortable 5-seater hybrid sedan ideal for long city rides and highway travel with excellent fuel efficiency.\",\n    \"features\": [\n        \"Leather Seats\",\n        \"Adaptive Cruise Control\",\n        \"Apple CarPlay & Android Auto\",\n        \"360 Camera\",\n        \"Dual-Zone Climate Control\"\n    ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "/vehicles/6a9a57c2aa6041bcb4910f9e",
+									"path": [
+										"vehicles",
+										"6a9a57c2aa6041bcb4910f9e"
+									],
+									"query": [
+										{
+											"key": "searchTerm",
+											"value": "Toyota",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "http://localhost:5173"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "696"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"2b8-/Lb1Wb0g/AfNEmXbSKwPuINgaBs\""
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 04 Sep 2026 06:08:32 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"message\": \"Vehicle updated successfully\",\n    \"data\": {\n        \"_id\": \"6a9a57c2aa6041bcb4910f9e\",\n        \"name\": \"Camry Hybrid\",\n        \"brand\": \"Toyota\",\n        \"category\": \"sedan\",\n        \"image\": \"https://images.unsplash.com/photo-1621007947382-bb3c3994e3fb\",\n        \"pricePerDay\": 65,\n        \"seats\": 5,\n        \"transmission\": \"automatic\",\n        \"fuelType\": \"hybrid\",\n        \"location\": \"Rajshahi\",\n        \"rating\": 4.9,\n        \"isAvailable\": true,\n        \"description\": \"Comfortable 5-seater hybrid sedan ideal for long city rides and highway travel with excellent fuel efficiency.\",\n        \"features\": [\n            \"Leather Seats\",\n            \"Adaptive Cruise Control\",\n            \"Apple CarPlay & Android Auto\",\n            \"360 Camera\",\n            \"Dual-Zone Climate Control\"\n        ],\n        \"createdAt\": \"2026-09-04T05:31:46.143Z\",\n        \"updatedAt\": \"2026-09-04T06:08:32.724Z\",\n        \"__v\": 0\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Delete Vehicle",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{signer_access_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url_local}}/vehicles/6a9a60cfaf355b81d2c0bb61",
+							"host": [
+								"{{base_url_local}}"
+							],
+							"path": [
+								"vehicles",
+								"6a9a60cfaf355b81d2c0bb61"
+							],
+							"query": [
+								{
+									"key": "searchTerm",
+									"value": "Toyota",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Delete Vehicle res",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{signer_access_token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "/vehicles/6a9a60cfaf355b81d2c0bb61",
+									"path": [
+										"vehicles",
+										"6a9a60cfaf355b81d2c0bb61"
+									],
+									"query": [
+										{
+											"key": "searchTerm",
+											"value": "Toyota",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "http://localhost:5173"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "693"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"2b5-M+rweS8or6MQE2IqeI3xKn+ZKzI\""
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 04 Sep 2026 06:10:37 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"message\": \"Vehicle deleted successfully\",\n    \"data\": {\n        \"_id\": \"6a9a60cfaf355b81d2c0bb61\",\n        \"name\": \"Camry Hybrid\",\n        \"brand\": \"Toyota\",\n        \"category\": \"sedan\",\n        \"image\": \"https://images.unsplash.com/photo-1621007947382-bb3c3994e3fb\",\n        \"pricePerDay\": 65,\n        \"seats\": 5,\n        \"transmission\": \"automatic\",\n        \"fuelType\": \"hybrid\",\n        \"location\": \"Dhaka\",\n        \"rating\": 4.9,\n        \"isAvailable\": true,\n        \"description\": \"Comfortable 5-seater hybrid sedan ideal for long city rides and highway travel with excellent fuel efficiency.\",\n        \"features\": [\n            \"Leather Seats\",\n            \"Adaptive Cruise Control\",\n            \"Apple CarPlay & Android Auto\",\n            \"360 Camera\",\n            \"Dual-Zone Climate Control\"\n        ],\n        \"createdAt\": \"2026-09-04T06:10:23.238Z\",\n        \"updatedAt\": \"2026-09-04T06:10:23.238Z\",\n        \"__v\": 0\n    }\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Register user",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{signer_access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"fullName\": \"Alex Admin\",\n    \"email\": \"admin@example.com\",\n    \"password\": \"Password123!\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url_local}}/auth/register",
+							"host": [
+								"{{base_url_local}}"
+							],
+							"path": [
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Register user Res",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{signer_access_token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"fullName\": \"Alex Morgan\",\n    \"email\": \"alex.morgan@example.com\",\n    \"password\": \"Password123!\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "/auth/register",
+									"path": [
+										"auth",
+										"register"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "http://localhost:5173"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "167"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"a7-1uLjSgI0oPz7fvR/erD6V5qqFjg\""
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 05 Sep 2026 12:26:30 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"message\": \"Registration successful\",\n    \"data\": {\n        \"_id\": \"6a9c0a7680212260d79f69cf\",\n        \"fullName\": \"Alex Morgan\",\n        \"email\": \"alex.morgan@example.com\",\n        \"role\": \"user\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Login with email",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{signer_access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "// user credentials\n// {\n//     \"email\": \"alex.morgan@example.com\",\n//     \"password\": \"Password123!\"\n// }\n// admin credentials\n{\n    \"email\": \"admin@example.com\",\n    \"password\": \"Password123!\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url_local}}/auth/login",
+							"host": [
+								"{{base_url_local}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Login Res (User)",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{signer_access_token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"alex.morgan@example.com\",\n    \"password\": \"Password123!\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "/auth/login",
+									"path": [
+										"auth",
+										"login"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "http://localhost:5173"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "694"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"2b6-0VTd/R28X+RZNK4VPfVJz1QNiM8\""
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 05 Sep 2026 12:27:33 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"message\": \"Login successful\",\n    \"data\": {\n        \"accessToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2YTljMGE3NjgwMjEyMjYwZDc5ZjY5Y2YiLCJ1c2VyRW1haWwiOiJhbGV4Lm1vcmdhbkBleGFtcGxlLmNvbSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzg4NjExMjUzLCJleHAiOjE3ODk5MDcyNTN9.vNmJCTZcTiYkLFeT5G1Z95b4i3WpTjr3BDQK5jDz3SY\",\n        \"refreshToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2YTljMGE3NjgwMjEyMjYwZDc5ZjY5Y2YiLCJ1c2VyRW1haWwiOiJhbGV4Lm1vcmdhbkBleGFtcGxlLmNvbSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzg4NjExMjUzLCJleHAiOjE3OTYzODcyNTN9.kyjQAToClcKcEcw66NhXp60rM5tNun1OjzMUMHWusi4\",\n        \"user\": {\n            \"_id\": \"6a9c0a7680212260d79f69cf\",\n            \"fullName\": \"Alex Morgan\",\n            \"email\": \"alex.morgan@example.com\",\n            \"role\": \"user\"\n        }\n    }\n}"
+						},
+						{
+							"name": "Login with email (Admin)",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{signer_access_token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "// user credentials\n// {\n//     \"email\": \"alex.morgan@example.com\",\n//     \"password\": \"Password123!\"\n// }\n// admin credentials\n{\n    \"email\": \"admin@example.com\",\n    \"password\": \"Password123!\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url_local}}/auth/login",
+									"host": [
+										"{{base_url_local}}"
+									],
+									"path": [
+										"auth",
+										"login"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "http://localhost:5173"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "676"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"2a4-lhwgH/uAe+RXoqH5WvJhGi0MEDA\""
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 05 Sep 2026 13:21:16 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"message\": \"Login successful\",\n    \"data\": {\n        \"accessToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2YTljMTZiNmI0OGY5MWYyMjZmMmZlMjkiLCJ1c2VyRW1haWwiOiJhZG1pbkBleGFtcGxlLmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc4ODYxNDQ3NiwiZXhwIjoxNzg5OTEwNDc2fQ.b-rnEtmMqiUeEEYAnTeiqszT3T7XnLW3HWtMfdt8RM0\",\n        \"refreshToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2YTljMTZiNmI0OGY5MWYyMjZmMmZlMjkiLCJ1c2VyRW1haWwiOiJhZG1pbkBleGFtcGxlLmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc4ODYxNDQ3NiwiZXhwIjoxNzk2MzkwNDc2fQ.JkMPrtg1gPTNa543drwxpcscNHiNp-JHHkMNmQqiw-8\",\n        \"user\": {\n            \"_id\": \"6a9c16b6b48f91f226f2fe29\",\n            \"fullName\": \"Alex Admin\",\n            \"email\": \"admin@example.com\",\n            \"role\": \"admin\"\n        }\n    }\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Get My Profile",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{access_token_user}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url_local}}/user/me",
+							"host": [
+								"{{base_url_local}}"
+							],
+							"path": [
+								"user",
+								"me"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get profile res",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "/user/me",
+									"path": [
+										"user",
+										"me"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "http://localhost:5173"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "258"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"102-YN7kfZYVjiSgYntRUG7f520o5OY\""
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 05 Sep 2026 12:30:45 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"message\": \"Profile fetched successfully\",\n    \"data\": {\n        \"_id\": \"6a9c0a7680212260d79f69cf\",\n        \"fullName\": \"Alex Morgan\",\n        \"email\": \"alex.morgan@example.com\",\n        \"role\": \"user\",\n        \"createdAt\": \"2026-09-05T12:26:30.074Z\",\n        \"updatedAt\": \"2026-09-05T12:26:30.074Z\",\n        \"__v\": 0\n    }\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Rentals",
+			"item": [
+				{
+					"name": "Create Rental",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{access_token_user}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"vehicle\": \"6a9aa2a854839a8165acce44\",\n    \"pickupLocation\": \"Hazrat Shahjalal International Airport, Dhaka\",\n    \"dropoffLocation\": \"Banani, Dhaka\",\n    \"pickupDate\": \"2026-09-10T10:00:00.000Z\",\n    \"dropoffDate\": \"2026-09-15T10:00:00.000Z\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url_local}}/rentals",
+							"host": [
+								"{{base_url_local}}"
+							],
+							"path": [
+								"rentals"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Create Rental res",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{access_token_user}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"vehicle\": \"6a9aa2a854839a8165acce44\",\n    \"pickupLocation\": \"Hazrat Shahjalal International Airport, Dhaka\",\n    \"dropoffLocation\": \"Banani, Dhaka\",\n    \"pickupDate\": \"2026-09-10T10:00:00.000Z\",\n    \"dropoffDate\": \"2026-09-15T10:00:00.000Z\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url_local}}/rentals",
+									"host": [
+										"{{base_url_local}}"
+									],
+									"path": [
+										"rentals"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "http://localhost:5173"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "504"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"1f8-HoZMPGxrsdKjPlDfXo5+VPw4D4Y\""
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 05 Sep 2026 12:34:02 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"message\": \"Rental created successfully\",\n    \"data\": {\n        \"user\": \"6a9c0a7680212260d79f69cf\",\n        \"vehicle\": \"6a9aa2a854839a8165acce44\",\n        \"pickupLocation\": \"Hazrat Shahjalal International Airport, Dhaka\",\n        \"dropoffLocation\": \"Banani, Dhaka\",\n        \"pickupDate\": \"2026-09-10T10:00:00.000Z\",\n        \"dropoffDate\": \"2026-09-15T10:00:00.000Z\",\n        \"totalDays\": 5,\n        \"pricePerDay\": 110,\n        \"totalAmount\": 550,\n        \"status\": \"pending\",\n        \"_id\": \"6a9c0c3a80212260d79f69d9\",\n        \"createdAt\": \"2026-09-05T12:34:02.168Z\",\n        \"updatedAt\": \"2026-09-05T12:34:02.168Z\",\n        \"__v\": 0\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Get my rentals",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{access_token_user}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url_local}}/rentals/my-rentals",
+							"host": [
+								"{{base_url_local}}"
+							],
+							"path": [
+								"rentals",
+								"my-rentals"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get Rentals res",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{access_token_user}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url_local}}/rentals/my-rentals",
+									"host": [
+										"{{base_url_local}}"
+									],
+									"path": [
+										"rentals",
+										"my-rentals"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "http://localhost:5173"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "676"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"2a4-4LKmQ9iBQOOk4sCTAROh2Ko/w/8\""
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 05 Sep 2026 12:50:35 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"message\": \"My rentals fetched successfully\",\n    \"data\": [\n        {\n            \"_id\": \"6a9c0c3a80212260d79f69d9\",\n            \"user\": \"6a9c0a7680212260d79f69cf\",\n            \"vehicle\": {\n                \"_id\": \"6a9aa2a854839a8165acce44\",\n                \"name\": \"Model Y\",\n                \"brand\": \"Tesla\",\n                \"category\": \"suv\",\n                \"image\": \"https://images.unsplash.com/photo-1617788138017-80ad40651399\",\n                \"pricePerDay\": 110,\n                \"location\": \"Dhaka\"\n            },\n            \"pickupLocation\": \"Hazrat Shahjalal International Airport, Dhaka\",\n            \"dropoffLocation\": \"Banani, Dhaka\",\n            \"pickupDate\": \"2026-09-10T10:00:00.000Z\",\n            \"dropoffDate\": \"2026-09-15T10:00:00.000Z\",\n            \"totalDays\": 5,\n            \"pricePerDay\": 110,\n            \"totalAmount\": 550,\n            \"status\": \"pending\",\n            \"createdAt\": \"2026-09-05T12:34:02.168Z\",\n            \"updatedAt\": \"2026-09-05T12:34:02.168Z\",\n            \"__v\": 0\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "Get Single Rental",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{access_token_user}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url_local}}/rentals/6a9c0c3a80212260d79f69d9",
+							"host": [
+								"{{base_url_local}}"
+							],
+							"path": [
+								"rentals",
+								"6a9c0c3a80212260d79f69d9"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get single rental res",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{access_token_user}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url_local}}/rentals/6a9c0c3a80212260d79f69d9",
+									"host": [
+										"{{base_url_local}}"
+									],
+									"path": [
+										"rentals",
+										"6a9c0c3a80212260d79f69d9"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "http://localhost:5173"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "670"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"29e-CBUE9qGlUD4sxNwsEP7VhQM0Bik\""
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 05 Sep 2026 12:52:02 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"message\": \"Rental fetched successfully\",\n    \"data\": {\n        \"_id\": \"6a9c0c3a80212260d79f69d9\",\n        \"user\": \"6a9c0a7680212260d79f69cf\",\n        \"vehicle\": {\n            \"_id\": \"6a9aa2a854839a8165acce44\",\n            \"name\": \"Model Y\",\n            \"brand\": \"Tesla\",\n            \"category\": \"suv\",\n            \"image\": \"https://images.unsplash.com/photo-1617788138017-80ad40651399\",\n            \"pricePerDay\": 110,\n            \"location\": \"Dhaka\"\n        },\n        \"pickupLocation\": \"Hazrat Shahjalal International Airport, Dhaka\",\n        \"dropoffLocation\": \"Banani, Dhaka\",\n        \"pickupDate\": \"2026-09-10T10:00:00.000Z\",\n        \"dropoffDate\": \"2026-09-15T10:00:00.000Z\",\n        \"totalDays\": 5,\n        \"pricePerDay\": 110,\n        \"totalAmount\": 550,\n        \"status\": \"pending\",\n        \"createdAt\": \"2026-09-05T12:34:02.168Z\",\n        \"updatedAt\": \"2026-09-05T12:34:02.168Z\",\n        \"__v\": 0\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Cancel Rental",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{access_token_user}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url_local}}/rentals/cancel/6a9c0c3a80212260d79f69d9",
+							"host": [
+								"{{base_url_local}}"
+							],
+							"path": [
+								"rentals",
+								"cancel",
+								"6a9c0c3a80212260d79f69d9"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Cancel Rental res",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{access_token_user}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url_local}}/rentals/cancel/6a9c0c3a80212260d79f69d9",
+									"host": [
+										"{{base_url_local}}"
+									],
+									"path": [
+										"rentals",
+										"cancel",
+										"6a9c0c3a80212260d79f69d9"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "http://localhost:5173"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "508"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"1fc-n4zcq2EEoQp6RioAQ3rZBtu+VZc\""
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 05 Sep 2026 12:55:36 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"message\": \"Rental cancelled successfully\",\n    \"data\": {\n        \"_id\": \"6a9c0c3a80212260d79f69d9\",\n        \"user\": \"6a9c0a7680212260d79f69cf\",\n        \"vehicle\": \"6a9aa2a854839a8165acce44\",\n        \"pickupLocation\": \"Hazrat Shahjalal International Airport, Dhaka\",\n        \"dropoffLocation\": \"Banani, Dhaka\",\n        \"pickupDate\": \"2026-09-10T10:00:00.000Z\",\n        \"dropoffDate\": \"2026-09-15T10:00:00.000Z\",\n        \"totalDays\": 5,\n        \"pricePerDay\": 110,\n        \"totalAmount\": 550,\n        \"status\": \"cancelled\",\n        \"createdAt\": \"2026-09-05T12:34:02.168Z\",\n        \"updatedAt\": \"2026-09-05T12:55:36.518Z\",\n        \"__v\": 0\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Get All Rentals (Admin only)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{access_token_admin}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url_local}}/rentals",
+							"host": [
+								"{{base_url_local}}"
+							],
+							"path": [
+								"rentals"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get All Rentals (Admin only) res",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{access_token_admin}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url_local}}/rentals",
+									"host": [
+										"{{base_url_local}}"
+									],
+									"path": [
+										"rentals"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "http://localhost:5173"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "727"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"2d7-M4wHONs+WyJyKkxnQQjJeox/rms\""
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 05 Sep 2026 13:21:57 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"message\": \"All rentals fetched successfully\",\n    \"data\": [\n        {\n            \"_id\": \"6a9c0c3a80212260d79f69d9\",\n            \"user\": {\n                \"_id\": \"6a9c0a7680212260d79f69cf\",\n                \"fullName\": \"Alex Morgan\",\n                \"email\": \"alex.morgan@example.com\"\n            },\n            \"vehicle\": {\n                \"_id\": \"6a9aa2a854839a8165acce44\",\n                \"name\": \"Model Y\",\n                \"brand\": \"Tesla\",\n                \"category\": \"suv\",\n                \"image\": \"https://images.unsplash.com/photo-1617788138017-80ad40651399\",\n                \"pricePerDay\": 110\n            },\n            \"pickupLocation\": \"Hazrat Shahjalal International Airport, Dhaka\",\n            \"dropoffLocation\": \"Banani, Dhaka\",\n            \"pickupDate\": \"2026-09-10T10:00:00.000Z\",\n            \"dropoffDate\": \"2026-09-15T10:00:00.000Z\",\n            \"totalDays\": 5,\n            \"pricePerDay\": 110,\n            \"totalAmount\": 550,\n            \"status\": \"cancelled\",\n            \"createdAt\": \"2026-09-05T12:34:02.168Z\",\n            \"updatedAt\": \"2026-09-05T12:55:36.518Z\",\n            \"__v\": 0\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "Update Rental Status (Admin only)",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{access_token_admin}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"status\": \"confirmed\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url_local}}/rentals/status/6a9c0c3a80212260d79f69d9",
+							"host": [
+								"{{base_url_local}}"
+							],
+							"path": [
+								"rentals",
+								"status",
+								"6a9c0c3a80212260d79f69d9"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Update Rental Status (Admin only) res",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{access_token_admin}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"status\": \"confirmed\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url_local}}/rentals/status/6a9c0c3a80212260d79f69d9",
+									"host": [
+										"{{base_url_local}}"
+									],
+									"path": [
+										"rentals",
+										"status",
+										"6a9c0c3a80212260d79f69d9"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "http://localhost:5173"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "513"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"201-4LYnx2b9Np2j5kuRX5g3IeRSuyM\""
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 05 Sep 2026 13:27:27 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"message\": \"Rental status updated successfully\",\n    \"data\": {\n        \"_id\": \"6a9c0c3a80212260d79f69d9\",\n        \"user\": \"6a9c0a7680212260d79f69cf\",\n        \"vehicle\": \"6a9aa2a854839a8165acce44\",\n        \"pickupLocation\": \"Hazrat Shahjalal International Airport, Dhaka\",\n        \"dropoffLocation\": \"Banani, Dhaka\",\n        \"pickupDate\": \"2026-09-10T10:00:00.000Z\",\n        \"dropoffDate\": \"2026-09-15T10:00:00.000Z\",\n        \"totalDays\": 5,\n        \"pricePerDay\": 110,\n        \"totalAmount\": 550,\n        \"status\": \"confirmed\",\n        \"createdAt\": \"2026-09-05T12:34:02.168Z\",\n        \"updatedAt\": \"2026-09-05T13:27:27.225Z\",\n        \"__v\": 0\n    }\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "AI",
+			"item": [
+				{
+					"name": "Car recommendation by AI",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{access_token_user}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"preferences\": \"I need a comfortable hybrid SUV for a family of 5. I want something reasonably priced.\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url_local}}/ai/recommend",
+							"host": [
+								"{{base_url_local}}"
+							],
+							"path": [
+								"ai",
+								"recommend"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Ai Car Recommendation Response",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{access_token_user}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"preferences\": \"I need a comfortable hybrid SUV for a family of 5. I want something reasonably priced.\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url_local}}/ai/recommend",
+									"host": [
+										"{{base_url_local}}"
+									],
+									"path": [
+										"ai",
+										"recommend"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "http://localhost:5173"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "308"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"134-vc8EG/gh0N/S/OFUEmmrH8mMkU4\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 06 Sep 2026 08:25:25 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"message\": \"Vehicle recommendation generated successfully\",\n    \"data\": {\n        \"vehicleId\": \"6a9aa2a854839a8165acce40\",\n        \"vehicleName\": \"RAV4\",\n        \"reason\": \"The Toyota RAV4 is a spacious, highly rated (4.8) 5-seater hybrid SUV that offers a comfortable ride, excellent fuel economy, and great value at $78/day.\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "n8n Automatoni TG sms",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"event\": \"rental.created\",\n    \"rental\": {\n        \"_id\": \"test-rental-002\",\n        \"pickupLocation\": \"Dhaka\",\n        \"dropoffLocation\": \"Chittagong\",\n        \"pickupDate\": \"2026-09-18T00:00:00.000Z\",\n        \"dropoffDate\": \"2026-09-21T00:00:00.000Z\",\n        \"totalDays\": 3,\n        \"pricePerDay\": 78,\n        \"totalAmount\": 234,\n        \"status\": \"pending\"\n    },\n    \"customer\": {\n        \"name\": \"Test Customer\",\n        \"email\": \"test@example.com\"\n    },\n    \"vehicle\": {\n        \"name\": \"RAV4\",\n        \"brand\": \"Toyota\",\n        \"category\": \"suv\",\n        \"fuelType\": \"hybrid\",\n        \"transmission\": \"automatic\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5678/webhook/drivepilot-rental-created",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5678",
+							"path": [
+								"webhook",
+								"drivepilot-rental-created"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Automation res",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"event\": \"rental.created\",\n    \"rental\": {\n        \"_id\": \"test-rental-002\",\n        \"pickupLocation\": \"Dhaka\",\n        \"dropoffLocation\": \"Chittagong\",\n        \"pickupDate\": \"2026-09-18T00:00:00.000Z\",\n        \"dropoffDate\": \"2026-09-21T00:00:00.000Z\",\n        \"totalDays\": 3,\n        \"pricePerDay\": 78,\n        \"totalAmount\": 234,\n        \"status\": \"pending\"\n    },\n    \"customer\": {\n        \"name\": \"Test Customer\",\n        \"email\": \"test@example.com\"\n    },\n    \"vehicle\": {\n        \"name\": \"RAV4\",\n        \"brand\": \"Toyota\",\n        \"category\": \"suv\",\n        \"fuelType\": \"hybrid\",\n        \"transmission\": \"automatic\"\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:5678/webhook/drivepilot-rental-created",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5678",
+									"path": [
+										"webhook",
+										"drivepilot-rental-created"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "Content-Security-Policy",
+									"value": "sandbox allow-downloads allow-forms allow-modals allow-orientation-lock allow-pointer-lock allow-popups allow-popups-to-escape-sandbox allow-presentation allow-scripts allow-top-navigation-by-user-activation allow-top-navigation-to-custom-protocols"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"5cf-OEqzlXYfACIuIGT/WBF9VVqEY4E\""
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "Content-Encoding",
+									"value": "br"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 07 Sep 2026 00:47:23 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"ok\": true,\n    \"result\": {\n        \"message_id\": 11,\n        \"from\": {\n            \"id\": 8718702661,\n            \"is_bot\": true,\n            \"first_name\": \"DrivePilot Rental Notifications\",\n            \"username\": \"DrivePilotRentalBot\"\n        },\n        \"chat\": {\n            \"id\": 8464286860,\n            \"first_name\": \"Md Rahatul\",\n            \"last_name\": \"Islam\",\n            \"username\": \"rahatulsmt\",\n            \"type\": \"private\"\n        },\n        \"date\": 1788742043,\n        \"text\": \"🚗 New Rental Created — DrivePilot\\n\\n👤 Customer\\nTest Customer\\ntest@example.com\\n\\n🚘 Vehicle\\nToyota RAV4\\nsuv • hybrid • automatic\\n\\n📍 Rental Details\\nPickup: Dhaka\\nDrop-off: Chittagong\\n\\n📅 Dates\\nPickup: 9/18/2026\\nDrop-off: 9/21/2026\\n\\n⏱ Duration\\n3 day(s)\\n\\n💰 Pricing\\n$78/day\\nTotal: $234\\n\\n📌 Status\\npending\\n\\n🆔 Rental ID\\ntest-rental-002\\n\\n\\nThis message was sent automatically with n8n\",\n        \"entities\": [\n            {\n                \"offset\": 3,\n                \"length\": 31,\n                \"type\": \"bold\"\n            },\n            {\n                \"offset\": 39,\n                \"length\": 8,\n                \"type\": \"bold\"\n            },\n            {\n                \"offset\": 62,\n                \"length\": 16,\n                \"type\": \"email\"\n            },\n            {\n                \"offset\": 83,\n                \"length\": 7,\n                \"type\": \"bold\"\n            },\n            {\n                \"offset\": 132,\n                \"length\": 14,\n                \"type\": \"bold\"\n            },\n            {\n                \"offset\": 186,\n                \"length\": 5,\n                \"type\": \"bold\"\n            },\n            {\n                \"offset\": 233,\n                \"length\": 8,\n                \"type\": \"bold\"\n            },\n            {\n                \"offset\": 255,\n                \"length\": 7,\n                \"type\": \"bold\"\n            },\n            {\n                \"offset\": 278,\n                \"length\": 4,\n                \"type\": \"bold\"\n            },\n            {\n                \"offset\": 287,\n                \"length\": 6,\n                \"type\": \"bold\"\n            },\n            {\n                \"offset\": 306,\n                \"length\": 9,\n                \"type\": \"bold\"\n            },\n            {\n                \"offset\": 334,\n                \"length\": 41,\n                \"type\": \"italic\"\n            },\n            {\n                \"offset\": 375,\n                \"length\": 3,\n                \"type\": \"text_link\",\n                \"url\": \"https://n8n.io/?utm_source=n8n-internal&utm_medium=powered_by&utm_campaign=n8n-nodes-base.telegram_a814cfcf0ef509dc913e945c3288c0776346d046f86582cdd5370d3840840ed0\"\n            }\n        ],\n        \"link_preview_options\": {\n            \"is_disabled\": true\n        }\n    }\n}"
+						}
+					]
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url_local",
+			"value": ""
+		},
+		{
+			"key": "access_token_user",
+			"value": ""
+		},
+		{
+			"key": "access_token_admin",
+			"value": ""
+		},
+		{
+			"key": "base_url_live",
+			"value": ""
+		}
+	]
+}

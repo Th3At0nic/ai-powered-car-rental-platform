@@ -20,6 +20,10 @@ The platform provides a customer-facing car rental experience, a protected admin
 **Backend API:**
 [https://drive-pilot-server.vercel.app]
 
+
+**Postman API Collection:**
+[https://documenter.getpostman.com/view/47770781/2sBYAvwApk]
+
 ---
 
 ## Repository
