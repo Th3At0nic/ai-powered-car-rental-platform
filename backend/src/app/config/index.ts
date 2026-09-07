@@ -62,5 +62,5 @@ export default {
 
   gemini_api_key: process.env.GEMINI_API_KEY,
 
-  n8n_webhook_url: process.env.n8n_webhook_url,
+  n8n_webhook_url: process.env.N8N_WEBHOOK_URL,
 };
